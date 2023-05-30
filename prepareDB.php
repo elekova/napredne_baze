@@ -127,7 +127,19 @@ try
 		'name varchar(50) NOT NULL,' .
         'city varchar(50) ,' .
         'country varchar(50) ,' .
-        'id_sport int FOREIGN KEY REFERENCES sport(id_sport))'
+        'id_sporta int '. 
+        'ADD CONSTRAINT fk_sport FOREIGN KEY (id_sporta) REFERENCES sport(id_sport))'
+	);
+
+	$st->execute();
+}
+catch( PDOException $e ) { exit( "PDO error [create club]: " . $e->getMessage() ); }
+
+try
+{
+	$st = $db->prepare(
+		'ALTER TABLE club ' .
+        'ADD CONSTRAINT fk_sport FOREIGN KEY (id_sporta) REFERENCES sport(id_sport)'
 	);
 
 	$st->execute();

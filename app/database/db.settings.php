@@ -1,8 +1,8 @@
 <?php
 
-$db_base = 'mysql:host=rp2.studenti.math.hr;dbname=krizanec;s+charset=utf8';
+$db_base = 'mysql:host=localhost;dbname=database;s+charset=utf8';
 
-$db_user = 'student';
-$db_pass = 'pass.mysql';
+$db_user = 'username';
+$db_pass = 'password';
 
 ?>
