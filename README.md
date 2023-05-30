@@ -8,6 +8,3 @@ NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A
 AURA_INSTANCEID=d9646c66
 AURA_INSTANCENAME=Instance01
-
-MATCH (p1:Person {username: 'lilee'}), (p2:Person {username: 'tina122'})
-CREATE (p1)-[:FRIENDS]->(p2)
