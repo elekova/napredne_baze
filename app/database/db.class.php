@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/db_settings.php';
+require_once __DIR__ . '/db.settings.php';
 
 class DB
 {
