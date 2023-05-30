@@ -78,8 +78,8 @@ try
 		'CREATE TABLE IF NOT EXISTS movie (' .
 		'id_movie int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
 		'title varchar(50) NOT NULL,' .
-        'director varchar(50) ,' .
-        'year int ,' .
+        'director varchar(50),' .
+        'year int,' .
 		'genre varchar(50) )'
 	);
 
@@ -127,18 +127,8 @@ try
 		'name varchar(50) NOT NULL,' .
         'city varchar(50) ,' .
         'country varchar(50) ,' .
-        'id_sporta int)'
-	);
-
-	$st->execute();
-}
-catch( PDOException $e ) { exit( "PDO error [create club]: " . $e->getMessage() ); }
-
-try
-{
-	$st = $db->prepare(
-		'ALTER TABLE club ' .
-        'ADD CONSTRAINT fk_sport FOREIGN KEY (id_sporta) REFERENCES sport(id_sport)'
+        'id_sporta int, '. 
+        'FOREIGN KEY (id_sporta) REFERENCES sport(id_sport) )'
 	);
 
 	$st->execute();
@@ -168,9 +158,11 @@ try
 	$st = $db->prepare(
 		'CREATE TABLE IF NOT EXISTS like_book (' .
 		'id_likebook int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-        'id_person int FOREIGN KEY REFERENCES person(id_person),'.
-        'id_book int FOREIGN KEY REFERENCES book(id_book),'.
-        'read int )'
+        'id_person int, '.
+        'id_book int,'.
+        'readed int, '. 
+        'FOREIGN KEY (id_person) REFERENCES person(id_person),' . 
+        'FOREIGN KEY (id_book) REFERENCES book(id_book) )'
 	);
 
 	$st->execute();
@@ -184,9 +176,11 @@ try
 	$st = $db->prepare(
 		'CREATE TABLE IF NOT EXISTS like_movie (' .
 		'id_likemovie int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-        'id_person int FOREIGN KEY REFERENCES person(id_person),'.
-        'id_movie int FOREIGN KEY REFERENCES movie(id_movie),'.
-        'watched int )'
+        'id_person int,'.
+        'id_movie int,'.
+        'watched int, ' . 
+        'FOREIGN KEY (id_person) REFERENCES person(id_person),'. 
+        'FOREIGN KEY (id_movie) REFERENCES movie(id_movie) )'
 	);
 
 	$st->execute();
@@ -200,8 +194,10 @@ try
 	$st = $db->prepare(
 		'CREATE TABLE IF NOT EXISTS like_sport (' .
 		'id_likesport int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-        'id_person int FOREIGN KEY REFERENCES person(id_person),'.
-        'id_sport int FOREIGN KEY REFERENCES sport(id_sport) )'
+        'id_person int,'.
+        'id_sport int, ' . 
+        'FOREIGN KEY (id_person) REFERENCES person(id_person), ' . 
+        'FOREIGN KEY (id_sport) REFERENCES sport(id_sport) )'
 	);
 
 	$st->execute();
@@ -215,8 +211,10 @@ try
 	$st = $db->prepare(
 		'CREATE TABLE IF NOT EXISTS like_club (' .
 		'id_likeclub int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-        'id_person int FOREIGN KEY REFERENCES person(id_person),'.
-        'id_club int FOREIGN KEY REFERENCES book(id_club))'
+        'id_person int,'.
+        'id_club int,'. 
+        'FOREIGN KEY (id_person) REFERENCES person(id_person),'. 
+        'FOREIGN KEY (id_club) REFERENCES club(id_club) )'
 	);
 
 	$st->execute();
@@ -230,8 +228,10 @@ try
 	$st = $db->prepare(
 		'CREATE TABLE IF NOT EXISTS like_band (' .
 		'id_likeband int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-        'id_person int FOREIGN KEY REFERENCES person(id_person),'.
-        'id_band int FOREIGN KEY REFERENCES band(id_band) )'
+        'id_person int,'.
+        'id_band int,'. 
+        'FOREIGN KEY (id_person) REFERENCES person(id_person),'. 
+        'FOREIGN KEY (id_band) REFERENCES band(id_band) )'
 	);
 
 	$st->execute();
@@ -239,7 +239,5 @@ try
 catch( PDOException $e ) { exit( "PDO error [create like_band]: " . $e->getMessage() ); }
 
 echo "Napravio tablicu like_band.<br />";
-
-
 
 ?>
