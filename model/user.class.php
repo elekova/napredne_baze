@@ -4,6 +4,7 @@ class User
 {
     protected $id_person, $username, $password, $name, $surname;
     protected $date, $city, $region, $registration_sequence, $has_registered, $email;
+    protected $friends, $favorites;
     
     function __construct($id_person, $username, $password, $name, $surname, $date, 
                     $city, $region, $registration_sequence, $has_registered, $email)
@@ -18,7 +19,8 @@ class User
         $this->registration_sequence = $registration_sequence;
         $this->has_registered = $has_registered;
         $this->email = $email;
-
+        $this->friends = []; 
+        $this->favorites = [];
     }
 
     function __get( $prop ){ return $this->$prop; }
