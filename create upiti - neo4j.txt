@@ -1,0 +1,171 @@
+CREATE (n:Person {id_person: '1', name: 'Iva', surname: 'Briško', username: 'koki_smoki'});
+
+CREATE (n:Person {id_person: '2', name: 'Kaja', surname: 'Katić', username: 'fifi889'});
+
+CREATE (n:Person {id_person: '3', name: 'Tina', surname: 'Sliško', username: 'tina122'});
+
+CREATE (n:Person {id_person: '4', name: 'Emilija', surname: 'Kokić', username: 'emili_k'});
+
+CREATE (n:Person {id_person: '5', name: 'Rikard', surname: 'Aldo', username: 'rik_pik'});
+
+CREATE (n:Person {id_person: '6', name: 'Nikola', surname: 'Ledinko', username: 'nikica'});
+
+CREATE (n:Person {id_person: '7', name: 'Ognjena', surname: 'Kolar', username: 'zmajica123'});
+
+CREATE (n:Person {id_person: '8', name: 'Petar', surname: 'Akmačić', username: 'ulicar_3'});
+
+CREATE (n:Person {id_person: '9', name: 'Paloma', surname: 'Rutić', username: 'pipi_carapa'});
+
+CREATE (n:Person {id_person: '10', name: 'Tijan', surname: 'Mladić', username: 'asteriks'});
+
+CREATE (n:Person {id_person: '11', name: 'Edi', surname: 'Kovačić', username: 'heroj45'});
+
+CREATE (n:Person {id_person: '12', name: 'Bojan', surname: 'Bombić', username: 'gum_bum'});
+
+CREATE (n:Person {id_person: '13', name: 'Kristina', surname: 'Kristić', username: 'kike00'});
+
+CREATE (n:Person {id_person: '14', name: 'Lidija', surname: 'Novak', username: 'lilee'});
+
+CREATE (n:Person {id_person: '15', name: 'Antonio', surname: 'Ilić', username: 'toni'});
+
+_________________________________________________________________________________________
+
+
+MATCH (p1:Person {username: 'lilee'}), (p2:Person {username: 'tina122'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'koki_smoki'}), (p2:Person {username: 'fifi889'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'koki_smoki'}), (p2:Person {username: 'pipi_carapa'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'koki_smoki'}), (p2:Person {username: 'asteriks'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'fifi889'}), (p2:Person {username: 'koki_smoki'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'fifi889'}), (p2:Person {username: 'nikica'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'fifi889'}), (p2:Person {username: 'ulicar_3'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'tina122'}), (p2:Person {username: 'zmajica123'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'tina122'}), (p2:Person {username: 'fifi889'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'tina122'}), (p2:Person {username: 'heroj45'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'emili_k'}), (p2:Person {username: 'koki_smoki'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'emili_k'}), (p2:Person {username: 'rik_pik'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'emili_k'}), (p2:Person {username: 'gum_bum'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'rik_pik'}), (p2:Person {username: 'tina122'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'rik_pik'}), (p2:Person {username: 'asteriks'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'rik_pik'}), (p2:Person {username: 'toni'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'nikica'}), (p2:Person {username: 'pipi_carapa'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'nikica'}), (p2:Person {username: 'asteriks'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'nikica'}), (p2:Person {username: 'heroj45'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'zmajica123'}), (p2:Person {username: 'koki_smoki'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'zmajica123'}), (p2:Person {username: 'fifi889'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'zmajica123'}), (p2:Person {username: 'tina122'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'ulicar_3'}), (p2:Person {username: 'emili_k'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'ulicar_3'}), (p2:Person {username: 'rik_pik'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'ulicar_3'}), (p2:Person {username: 'nikica'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'pipi_carapa'}), (p2:Person {username: 'zmajica123'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'ulicar_3'}), (p2:Person {username: 'asteriks'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'asterkis'}), (p2:Person {username: 'pipi_carapa'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'asterkis'}), (p2:Person {username: 'heroj45'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'asterkis'}), (p2:Person {username: 'gum_bum'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'heroj45'}), (p2:Person {username: 'kike00'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'heroj45'}), (p2:Person {username: 'lilee'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'heroj45'}), (p2:Person {username: 'toni'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'gum_bum'}), (p2:Person {username: 'fifi889'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'gum_bum'}), (p2:Person {username: 'toni'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'gum_bum'}), (p2:Person {username: 'nikica'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'kike00'}), (p2:Person {username: 'emili_k'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'kike00'}), (p2:Person {username: 'gum_bum'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'kike00'}), (p2:Person {username: 'asteriks'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'lilee'}), (p2:Person {username: 'zmajica123'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'lilee'}), (p2:Person {username: 'kike00'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'lilee'}), (p2:Person {username: 'gum_bum'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'toni'}), (p2:Person {username: 'ulicar_3'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'toni'}), (p2:Person {username: 'rik_pik'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+MATCH (p1:Person {username: 'toni'}), (p2:Person {username: 'heroj45'})
+CREATE (p1)-[:FOLLOWS]->(p2);
+
+
+
+
