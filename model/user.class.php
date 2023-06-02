@@ -7,7 +7,7 @@ class User
     protected $friends, $favorites;
     
     function __construct($id_person, $username, $password, $name, $surname, $date, 
-                    $city, $region, $registration_sequence, $has_registered, $email)
+                    $city, $region, $registration_sequence, $has_registered, $email, $friends, $favorites)
     {
         $this->id_person = $id_person;
         $this->username = $username;
