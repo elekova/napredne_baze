@@ -65,51 +65,13 @@ class LibraryService
 	//ovo treba napraviti u skladu s neo4j
 	function getAllFollowers( )
 	{
-		try
-		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id, name, surname, password FROM person ORDER BY surname' );
-			$st->execute();
-		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
-		$arr = array();
-		while( $row = $st->fetch() )
-		{
-			$arr[] = new Person( $row['id'], $row['name'], $row['surname'], $row['password'] );
-		}
-
-		return $arr;
+	
 	}
 
 	//ovo treba napraviti u skladu sa Neo4j
 	function getAllFollowing( )
 	{
-		try
-		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id, name, surname, password FROM person ORDER BY surname' );
-			$st->execute();
-		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
-		$arr = array();
-		while( $row = $st->fetch() )
-		{
-			$arr[] = new Person( $row['id'], $row['name'], $row['surname'], $row['password'] );
-		}
-
-		return $arr;
-	}
-
-	// funkcija koja stvara novu vezu u Neo4j
-	function Follow($id_person1, $id_person2) {
-
-	}
-
-	// funkcija koja bri�e vezu u Neo4j
-	function Unfollow($id_person1, $id_person2) {
-
+		
 	}
 
 	//funkcija koja vra�a sve ponu�ene knjige
