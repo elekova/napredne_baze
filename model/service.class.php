@@ -19,6 +19,32 @@ class LibraryService
 			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'], $row['password'] );
 	}
 
+    function addFriend(User $friend)
+    {
+        $this->friends[] = $friend;
+    }
+
+    function removeFriend(User $friend)
+    {
+        $index = array_search($friend, $this->friends);
+        if ($index !== false) {
+            array_splice($this->friends, $index, 1);
+        }
+    }
+
+    function addFavorite(User $favorite)
+    {
+        $this->favorites[] = $favorite;
+    }
+
+    function removeFavorite(User $favorite)
+    {
+        $index = array_search($favorite, $this->favorites);
+        if ($index !== false) {
+            array_splice($this->favorites, $index, 1);
+        }
+    }
+
 	function getPersonByName( $name )
 	{
 		try
