@@ -1,6 +1,6 @@
 <?php
 
-class LibraryService
+class Service
 {
 	function getPersonById( $id )
 	{
