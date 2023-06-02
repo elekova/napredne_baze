@@ -1,6 +1,6 @@
 <?php
 
-class User
+class Person
 {
     protected $id_person, $username, $password, $name, $surname;
     protected $date, $city, $region, $registration_sequence, $has_registered, $email;
