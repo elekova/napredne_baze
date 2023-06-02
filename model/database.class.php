@@ -8,14 +8,15 @@ class DatabaseManager
 
     function __construct()
     {
-        $database = $_ENV['NEO4J_initial_dbms_default__database'] ?? 'movies'; //kak se zove database?
+        $database = $_ENV['NEO4J_initial_dbms_default__database'] ?? 'Instance01'; //kak se zove database?
         $uri = $_ENV['CONNECTION_URI'] ?? sprintf('neo4j+s://d9646c66.databases.neo4j.io', $database); 
         $user = $_ENV['DB_USER'] ?? 'neo4j';
-        //pametniji nacin za password?
+        //pametniji nacin za password? mozda u settings
         $password = $_ENV['DB_PASSWORD'] ?? 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A';
     
+        //bolt/neo4j ?
         $this->driver = \GraphAware\Neo4j\Client\ClientBuilder::create()
-            ->addConnection('bolt', $uri, $user, $password)
+            ->addConnection('bolt', $uri, $user, $password) 
             ->build();
 
     }

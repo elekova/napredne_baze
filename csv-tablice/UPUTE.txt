@@ -1,0 +1,21 @@
+Svaka csv tablica zove se isto kao i tablica koju imamo u bazi.
+Provjerite format svake tablice, tj da je spremljena kao csv (Comma delimited).
+
+PRIMJER ZA TABLICU person:  -ostale idu analogno
+1. u database pozicionirajte se na tablicu person
+2. kliknete na IMPORT ( gore u izborniku )
+3. File to import / Choose File / person.csv
+4. Partial import : promijeniti na 1
+5. Format : CSV using LOAD DATA
+6. Klikni Import
+
+
+SVE OSTALO NE MIJENJATI!
+
+Držite se tih uputa jer u suprotnom bi mogle dobiti različite id-ove, a to nikako ne želimo!
+
+Još jedna stvar, sva hrvatska slova č ć š ž đ su promijenjena u c c s z d zbog toga jer su mi kod importa postala ?.
+
+U TABLICI PERSON provjerite datum PRIJE IMPORTA:
+Označite sve ćelije koje imaju datum, desni klik Format Cells, Custom, yyyy-mm-dd.
+Ovo je važno jer ih inače ne sprema dobro.

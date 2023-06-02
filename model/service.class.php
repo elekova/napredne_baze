@@ -19,6 +19,32 @@ class Service
 			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'], $row['password'] );
 	}
 
+    function addFriend(User $friend)
+    {
+        $this->friends[] = $friend;
+    }
+
+    function removeFriend(User $friend)
+    {
+        $index = array_search($friend, $this->friends);
+        if ($index !== false) {
+            array_splice($this->friends, $index, 1);
+        }
+    }
+
+    function addFavorite(User $favorite)
+    {
+        $this->favorites[] = $favorite;
+    }
+
+    function removeFavorite(User $favorite)
+    {
+        $index = array_search($favorite, $this->favorites);
+        if ($index !== false) {
+            array_splice($this->favorites, $index, 1);
+        }
+    }
+
 	function getPersonByName( $name )
 	{
 		try
@@ -39,54 +65,16 @@ class Service
 	//ovo treba napraviti u skladu s neo4j
 	function getAllFollowers( )
 	{
-		try
-		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id, name, surname, password FROM person ORDER BY surname' );
-			$st->execute();
-		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
-		$arr = array();
-		while( $row = $st->fetch() )
-		{
-			$arr[] = new Person( $row['id'], $row['name'], $row['surname'], $row['password'] );
-		}
-
-		return $arr;
+	
 	}
 
 	//ovo treba napraviti u skladu sa Neo4j
 	function getAllFollowing( )
 	{
-		try
-		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id, name, surname, password FROM person ORDER BY surname' );
-			$st->execute();
-		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
-		$arr = array();
-		while( $row = $st->fetch() )
-		{
-			$arr[] = new Person( $row['id'], $row['name'], $row['surname'], $row['password'] );
-		}
-
-		return $arr;
+		
 	}
 
-	// funkcija koja stvara novu vezu u Neo4j
-	function Follow($id_person1, $id_person2) {
-
-	}
-
-	// funkcija koja briše vezu u Neo4j
-	function Unfollow($id_person1, $id_person2) {
-
-	}
-
-	//funkcija koja vraæa sve ponuðene knjige
+	//funkcija koja vraï¿½a sve ponuï¿½ene knjige
 	function getAllBooks()
 	{
 		try
@@ -106,7 +94,7 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja omoguæava korisniku da lajka knjigu $id_book
+	//funkcija koja omoguï¿½ava korisniku da lajka knjigu $id_book
 	function LikeBook($id_person, $id_book)
 	{
 		try
@@ -119,7 +107,7 @@ class Service
 
 	}
 
-	// funkcija za svaku osobu vraæa knjige koje se osobi sviðaju
+	// funkcija za svaku osobu vraï¿½a knjige koje se osobi sviï¿½aju
 	function getLikedBooks($id_person)
 	{
 		try
@@ -142,7 +130,7 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja vraæa sve ponuðene sportove
+	//funkcija koja vraï¿½a sve ponuï¿½ene sportove
 	function getAllSports()
 	{
 		try
@@ -162,7 +150,7 @@ class Service
 		return $arr;
 	}
 	
-	//funkcija koja omoguæava korisniku $id_person da lajka sport $id_sport
+	//funkcija koja omoguï¿½ava korisniku $id_person da lajka sport $id_sport
 	function LikeSport($id_person, $id_sport)
 	{
 		try
@@ -174,7 +162,7 @@ class Service
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
 
-	//funkcija koja vraæa sportove koji se sviðaju odreðenoj osobi s $id_person
+	//funkcija koja vraï¿½a sportove koji se sviï¿½aju odreï¿½enoj osobi s $id_person
 	function getLikedSports($id_person)
 	{
 		try
@@ -197,7 +185,7 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja sve ponuðene bendove
+	//funkcija koja sve ponuï¿½ene bendove
 	function getAllBands()
 	{
 		try
@@ -217,7 +205,7 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja omoguæava korisniku $id_person da lajka bend $id_band
+	//funkcija koja omoguï¿½ava korisniku $id_person da lajka bend $id_band
 	function LikeBand($id_person, $id_band)
 	{
 		try
@@ -230,7 +218,7 @@ class Service
 
 	}
 
-	//funkcija koja vraæa bendove koji se sviðaju odreðenoj osobi s $id_person
+	//funkcija koja vraï¿½a bendove koji se sviï¿½aju odreï¿½enoj osobi s $id_person
 	function getLikedBands($id_person)
 	{
 		try
@@ -253,7 +241,7 @@ class Service
 		return $arr;
 	}
 
-	// funkcija koja vraæa sve ponuðene filmove
+	// funkcija koja vraï¿½a sve ponuï¿½ene filmove
 	function getAllMovies()
 	{
 		try
@@ -273,7 +261,7 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja omoguæava korisniku $id_person da lajka film $id_movie
+	//funkcija koja omoguï¿½ava korisniku $id_person da lajka film $id_movie
 	function LikeMovie($id_person, $id_movie)
 	{
 		try
@@ -286,7 +274,7 @@ class Service
 
 	}
 
-	//funkcija koja vraæa filmove koji se sviðaju odreðenoj osobi s $id_person
+	//funkcija koja vraï¿½a filmove koji se sviï¿½aju odreï¿½enoj osobi s $id_person
 	function getLikedMovies($id_person)
 	{
 		try
@@ -324,7 +312,7 @@ class Service
 
 		$row = $st -> fetch();
 		if($row === false){
-			// Taj user ne postoji, upit u bazu nije vratio ništa.
+			// Taj user ne postoji, upit u bazu nije vratio niï¿½ta.
 			return 0;
 		}
 		else{
