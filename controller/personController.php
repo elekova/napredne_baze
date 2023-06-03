@@ -9,7 +9,7 @@ class PersonController extends BaseController
 
     function getUser( $username )
     {
-
+        
     }
 
     function addFriendAction($userId, $friendId)
