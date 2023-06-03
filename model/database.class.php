@@ -95,7 +95,7 @@ class DatabaseManager
         if (!$hasResults) {
             return NULL;
         } else {
-            return $parm;
+            return $param;
         }
     }
 
