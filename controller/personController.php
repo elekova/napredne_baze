@@ -4,7 +4,7 @@ class PersonController extends BaseController
 {
     function index()
     {
-        
+     
     }
 
     function getUser( $username )
