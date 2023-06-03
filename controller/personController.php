@@ -36,7 +36,7 @@ class PersonController extends BaseController
         $user->removeFriend($friend);
         $friend->removeFriend($user);
 
-        //spremiti ubazu
+        //spremiti u bazu
 
         //neka obavijest
     }
