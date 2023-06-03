@@ -1,37 +1,55 @@
 <?php
 
-//klasa koja omogucava spajanje na neo4j bazu
+require __DIR__ . '/vendor/autoload.php';
+
+use Laudis\Neo4j\ClientBuilder;
+use Laudis\Neo4j\Authentication\Authenticate;
+
+$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+$results = $client->run('MATCH (p:Person) RETURN p');
+
 class DatabaseManager
 {
-    protected static $instance;
-    protected $driver;
+    protected $results;
 
     function __construct()
     {
-        $database = $_ENV['NEO4J_initial_dbms_default__database'] ?? 'Instance01'; //kak se zove database?
-        $uri = $_ENV['CONNECTION_URI'] ?? sprintf('neo4j+s://d9646c66.databases.neo4j.io', $database); 
-        $user = $_ENV['DB_USER'] ?? 'neo4j';
-        //pametniji nacin za password? mozda u settings
-        $password = $_ENV['DB_PASSWORD'] ?? 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A';
+        $results = NULL;
+    }
+
+    function getFriends( $username )
+    {
+        $results = $client->run('MATCH (p:Person) RETURN p');
+    }
+
+    function getFollowing()
+    {
+
+    }
+
+    function getFollowers()
+    {
+
+
+        foreach($results as $result){
+            $node = $result->get('p');
     
-        //bolt/neo4j ?
-        $this->driver = \GraphAware\Neo4j\Client\ClientBuilder::create()
-            ->addConnection('bolt', $uri, $user, $password) 
-            ->build();
-
-    }
-
-    public static function getInstance() {
-        if (!self::$instance) {
-            self::$instance = new self();
+            echo $node->getProperty('name').'<br>';
         }
-
-        return self::$instance;
     }
 
-    public function getDriver() {
-        return $this->driver;
+    function addFriend()
+    {
+
     }
+
+    function followUser()
+    {
+
+    }
+
 }
 
 ?>
