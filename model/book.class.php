@@ -8,7 +8,6 @@ class Book
     {
         $this->id_book = $id_book;
         $this->title = $title;
-        $this->title = $title;
         $this->author = $author;
         $this->year = $year;
     }

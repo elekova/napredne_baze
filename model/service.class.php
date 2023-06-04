@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../app/database/db.class.php';
+
 class Service
 {
 	function getPersonById( $id )
@@ -62,17 +64,23 @@ class Service
 			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'], $row['password'] );
 	}
 
-	//ovo treba napraviti u skladu s neo4j
-	function getAllFollowers( )
+	function getBookByName( $name )
 	{
-	
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM book WHERE book['tytle'] = :name');
+			$st->execute( array( 'name' => $name ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Book( $row['tytle'], $row['author'], $row['year'] );
 	}
 
-	//ovo treba napraviti u skladu sa Neo4j
-	function getAllFollowing( )
-	{
-		
-	}
 
 	//funkcija koja vra�a sve ponu�ene knjige
 	function getAllBooks()
@@ -328,6 +336,83 @@ class Service
 			}
 		}
 	}
+
+	// funkcija za dodavanje knjige u database book
+	public function AddBook ($title, $author, $years) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO book (title, author, year) VALUES(:title, :author, :year)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+		
+	}
+
+	// funkcija za dodavanje filma u database movie
+	public function AddMovie ($title, $director, $year, $genre) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO movie (title, director, year, genre) VALUES(:title, :director, :year, :genre)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+	// funkcija za dodavanje sporta u database sport
+	public function AddSport ($type) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO sport (type) VALUES(:type)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+	// funkcija za dodavanje kluba u database club
+	public function AddClub ($name, $city, $country, $id_sporta) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO club (name, city, country, id_sporta) VALUES(:name, :city, :country, :id_sporta)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+	// funkcija za dodavanje benda u database band
+	public function AddBand ($name, $country, $genre) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO band (name, country, genre) VALUES(:name, :country, :genre)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+
 
 };
 

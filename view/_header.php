@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Crew</title>
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="css/style_.css">
 <style>
 .navbar {
     overflow: hidden;
