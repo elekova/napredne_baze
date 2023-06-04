@@ -44,7 +44,6 @@ class DatabaseManager
         {
             $node = $result->get('p');
             $param = ['name' => $node->getProperty('name'), 'surname' => $node->getProperty('surname')];
-            echo '<br>';
         }
         return $param;
     }
@@ -111,11 +110,11 @@ class DatabaseManager
         $client->run($query, ['follows' => $follows, 'followed' => $followed]);
     }
 
-    function addUser( $username, $name, $surname)
+    function addUser( $id, $username, $name, $surname)
     {
 
-        $query = 'CREATE (p:Person {username: $username, name: $name, surname: $surname}) RETURN p';
-        $result = $client->run($query, ['username' => $username, 'name' => $name, 'surname' => $surname]);
+        $query = 'CREATE (p:Person {id_person : $id , username: $username, name: $name, surname: $surname}) RETURN p';
+        $result = $client->run($query, ['id' => $id, 'username' => $username, 'name' => $name, 'surname' => $surname]);
 
         if ($result->count() > 0) {
             echo "Novi korisnik je uspješno dodan.";
