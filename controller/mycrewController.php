@@ -12,8 +12,16 @@ class MycrewController
 		}
 		$title = "Welcome to MY CREW!";
 
+		$service= new Service();
+		$person = $service->getPersonByName($_SESSION['username']);
 
 		require_once __DIR__ . '/../view/mycrew_index.php';
 	}
+
+	function getData()
+	{
+
+	}
+
 };
 ?>

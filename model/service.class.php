@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../app/database/db.class.php';
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once 'person.class.php';
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
@@ -17,8 +18,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_person, username, name, surname, password FROM person WHERE id=:id' );
-			$st->execute( array( 'id_person' => $id ) );
+			$st = $db->prepare( 'SELECT * FROM person_nova WHERE id_person=:id' );
+			$st->execute( array( 'id' => $id ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -26,7 +27,7 @@ class Service
 		if( $row === false )
 			return null;
 		else
-			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'], $row['password'] );
+			return new Person( $row['id_person'], $row['username'], $row['password'], $row['name'], $row['surname'], $row['email'], $row['gender'] );
 	}
 
 	function getPersonByName( $username )
@@ -34,16 +35,20 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare('SELECT id_person, username, name, surname, password FROM person WHERE username = :username');
+			$st = $db->prepare('SELECT * FROM person_nova WHERE username = :username');
 			$st->execute( array( 'username' => $username ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$row = $st->fetch();
+		$param = array ('id_person' => $row['id_person'], 'username' => $row['username'], 
+			'password' => $row['password'], 'name' => $row['name'], 'surname' => $row['surname'], 
+			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city']);
+		
 		if( $row === false )
 			return null;
 		else
-			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'] );
+			return $param;
 	}
 
 	function getBookByName( $name )
