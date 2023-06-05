@@ -51,8 +51,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare('SELECT * FROM book WHERE book['tytle'] = :name');
-			$st->execute( array( 'name' => $name ) );
+			$st = $db->prepare('SELECT * FROM book WHERE title = :name');
+			$st->execute( array( ':name' => $name ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -60,7 +60,7 @@ class Service
 		if( $row === false )
 			return null;
 		else
-			return new Book( $row['tytle'], $row['author'], $row['year'] );
+			return new Book( $row['title'], $row['author'], $row['year'] );
 	}
 
 	//funkcija koja vraca sve ponudjene knjige
@@ -392,7 +392,7 @@ class Service
 		}
 
 	}
-
+	
 	//neo4j-------------------------------------------------------------------------------------------------------------------------------
 
 	function getUserById( $id )
@@ -498,6 +498,7 @@ class Service
             echo "Dodavanje novog korisnika nije uspjelo.";
         }
     }
+
 
 
 };
