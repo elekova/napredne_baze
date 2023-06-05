@@ -7,10 +7,6 @@ require_once 'person.class.php';
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
 
-$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
-$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
-$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
-
 class Service
 {
 	function getPersonById( $id )
@@ -476,6 +472,9 @@ class Service
 	function getUserById( $id )
     {
         //ID MORA BITI STRING!
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
         $idString = strval( $id );
         $results = $client->run('MATCH (p:Person {id_person: $id}) RETURN p', ['id' => $idString]);
 
@@ -490,7 +489,10 @@ class Service
 
     function getUserByUsername( $username )
     {
-        
+        $url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $results = $client->run('MATCH (p:Person {username: $ime}) RETURN p', ['ime' => $username]);
         $param = [];
 
@@ -506,6 +508,10 @@ class Service
     //vraca null ako user ne followa nikoga
     function getFollowing( $id )
     { 
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $param = [];
         $count = 0;
         $hasResults = FALSE;
@@ -530,6 +536,10 @@ class Service
     //ako nema pratitelja vraca NULL
     function getFollowers( $id )
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $param = [];
         $count = 0;
         $hasResults = FALSE;
@@ -553,6 +563,10 @@ class Service
 
     function addFollow( $follows, $followed)
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $query = 'MATCH (p1:Person {username: $follows}), (p2:Person {username: $followed}) CREATE (p1)-[:FOLLOWS]->(p2)';
         $client->run($query, ['follows' => $follows, 'followed' => $followed]);
 
@@ -560,13 +574,20 @@ class Service
 
     function removeFollow()
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+		
         $query = 'MATCH (p1:Person {username: $follows})-[r:FOLLOWS]->(p2:Person {username: $followed}) DELETE r';
         $client->run($query, ['follows' => $follows, 'followed' => $followed]);
     }
 
     function addUser( $id, $username, $name, $surname)
     {
-
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+		
         $query = 'CREATE (p:Person {id_person : $id , username: $username, name: $name, surname: $surname}) RETURN p';
         $result = $client->run($query, ['id' => $id, 'username' => $username, 'name' => $name, 'surname' => $surname]);
 

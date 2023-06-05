@@ -11,6 +11,8 @@
 	<nav>
 		<ul>
 			<li><a href="index.php?rt=mycrew">My Profile</a></li>
+      <li><a href="index.php?rt=follow/following"> Following </a></li>
+      <li><a href="index.php?rt=follow/followers"> Followers </a></li>
 			<li><a href="index.php?rt=login/out"> Log out </a></li>
 		</ul>
 	</nav>
