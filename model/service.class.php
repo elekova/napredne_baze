@@ -51,6 +51,28 @@ class Service
 			return $param;
 	}
 
+	function updateName($username, $name)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET name = :name WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'name' => $name ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateDate($username, $date)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET date_of_birth = :date WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'date' => $date ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
 	function getBookByName( $name )
 	{
 		try
