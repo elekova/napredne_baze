@@ -52,7 +52,7 @@ class Service
 		{
 			$db = DB::getConnection();
 			$st = $db->prepare('SELECT * FROM book WHERE title = :name');
-			$st->execute( array( ':name' => $name ) );
+			$st->execute( array( 'name' => $name ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -286,12 +286,11 @@ class Service
 		return $arr;
 	}
 
-	//login, ne znam dal radi (pise Nina)
 	function checkUser($username, $password){
 		$db = DB::getConnection();
 
 		try{
-			$st = $db->prepare( 'SELECT id, password FROM users WHERE name=:username' );
+			$st = $db->prepare( 'SELECT id_person,username, password FROM person_nova WHERE username=:username' );
 			$st->execute( array( 'username' => $username ) );
 		}
 		catch( PDOException $e ){
@@ -306,10 +305,10 @@ class Service
 		}
 		else{
 			// Postoji user. Dohvati hash njegovog passworda.
-			$hash = $row[ 'password'];
+			$pass = $row[ 'password'];
 			// Da li je password dobar?
-			if( password_verify( $_POST['password'], $hash)){
-				return $row['id'];
+			if( $pass == $password){
+				return $row['username'];
 			}
 			else{
 				// Nije dobar. Crtaj opet login formu s pripadnom porukom.

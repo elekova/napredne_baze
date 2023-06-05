@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends BaseController
+class IndexController
 {
 	public function index()
 	{
@@ -8,4 +8,5 @@ class IndexController extends BaseController
 		header( 'Location: index.php?rt=mycrew' );
 	}
 };
+
 ?>
