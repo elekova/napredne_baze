@@ -1,7 +1,7 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/../app/database/db.class.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
