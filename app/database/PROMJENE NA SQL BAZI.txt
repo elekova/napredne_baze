@@ -1,0 +1,11 @@
+ALTER TABLE `person_nova` ADD UNIQUE(`username`);
+
+ALTER TABLE `band` ADD INDEX(`name`);
+
+ALTER TABLE `book` ADD INDEX(`title`);
+
+ALTER TABLE `club` ADD INDEX(`name`);
+
+ALTER TABLE `movie` ADD INDEX(`title`);
+
+ALTER TABLE `sport` ADD INDEX(`type`);
