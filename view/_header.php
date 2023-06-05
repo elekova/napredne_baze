@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf8">
 	<title>MY CREW</title>
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
 	<h1><?php echo $title; ?></h1>
