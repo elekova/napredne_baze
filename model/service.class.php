@@ -513,7 +513,6 @@ class Service
 		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
         $param = [];
-        $count = 0;
         $hasResults = false;
 
         $query = 'MATCH (p:Person {id_person: $id_follows})-[:FOLLOWS]->(followed:Person) RETURN followed.id_person AS followedId';
@@ -540,8 +539,7 @@ class Service
 		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
         $param = [];
-        $count = 0;
-        $hasResults = FALSE;
+        $hasResults = false;
         
         $query = 'MATCH (follower:Person)-[:FOLLOWS]->(p:Person {id_person: $id_followed}) RETURN follower.id_person AS followerId';
         $results = $client->run($query, ['id_followed' => $id]);
@@ -550,7 +548,6 @@ class Service
             $node = $result->get('followerId');
             $param[] = $node;
             $hasResults = true;
-            ++$count;
         }
         
         if (!$hasResults) {
