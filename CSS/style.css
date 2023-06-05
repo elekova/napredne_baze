@@ -1,68 +1,43 @@
-.navbar {
-    overflow: hidden;
-    background-color: rgb(52, 79, 235);
-    font-family: Arial;
+/* Osnovni stil stranice */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
 }
 
-    /* Links inside the navbar */
-    .navbar a {
-        float: left;
-        font-size: 16px;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-/* The dropdown container */
-.dropdown {
-    float: left;
-    overflow: hidden;
+/* Stil za naslov */
+h1 {
+  color: #333;
 }
 
-    /* Dropdown button */
-    .dropdown .dropbtn {
-        font-size: 16px;
-        border: none;
-        outline: none;
-        color: rgb(255, 255, 255);
-        padding: 14px 16px;
-        background-color: inherit;
-        font-family: inherit; /* Important for vertical align on mobile phones */
-        margin: 0; /* Important for vertical align on mobile phones */
-    }
-
-    /* Add a red background color to navbar links on hover */
-    .navbar a:hover, .dropdown:hover .dropbtn {
-        background-color: rgb(73, 69, 69);
-    }
-
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgb(0, 122, 0);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+/* Stil za navigaciju */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
-    /* Links inside the dropdown */
-    .dropdown-content a {
-        float: none;
-        color: white;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        text-align: left;
-    }
+nav ul li {
+  margin-right: 10px;
+}
 
-        /* Add a grey background color to dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: rgb(73, 69, 69);
-        }
+nav ul li a {
+  color: #333;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 3px;
+}
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
+nav ul li a:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Stil za poruku samo nekaj ispis */
+p {
+  color: #333;
+  font-style: italic;
 }
