@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/database/db.class.php';
 
 use Laudis\Neo4j\ClientBuilder;
@@ -102,8 +102,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_book, title, author 
-									FROM book b 
+			$st = $db->prepare( 'SELECT id_book, title, author
+									FROM book b
 									JOIN like_book lb ON b.id_book = lb.id_book
 									WHERE lb.id_person = :id_person;' );
 			$st->execute();
@@ -138,7 +138,7 @@ class Service
 
 		return $arr;
 	}
-	
+
 	//funkcija koja omogu�ava korisniku $id_person da lajka sport $id_sport
 	function LikeSport($id_person, $id_sport)
 	{
@@ -157,8 +157,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_sport, type 
-									FROM sport s 
+			$st = $db->prepare( 'SELECT id_sport, type
+									FROM sport s
 									JOIN like_sport ls ON s.id_sport = ls.id_sport
 									WHERE lb.id_person = :id_person;' );
 			$st->execute();
@@ -214,7 +214,7 @@ class Service
 		{
 			$db = DB::getConnection();
 			$st = $db->prepare( 'SELECT id_band, name, genre
-									FROM band b 
+									FROM band b
 									JOIN like_band lb ON b.id_band = lb.id_band
 									WHERE lb.id_person = :id_person;' );
 			$st->execute();
@@ -329,7 +329,7 @@ class Service
 			echo 'Greska u Service.class.php!';
 			return 0;
 		}
-		
+
 	}
 
 	// funkcija za dodavanje filma u database movie
@@ -391,7 +391,7 @@ class Service
 		}
 
 	}
-	
+
 	//neo4j-------------------------------------------------------------------------------------------------------------------------------
 
 	function getUserById( $id )
@@ -407,11 +407,11 @@ class Service
         }
 
         return $param;
-    } 
+    }
 
     function getUserByUsername( $username )
     {
-        
+
         $results = $client->run('MATCH (p:Person {username: $ime}) RETURN p', ['ime' => $username]);
         $param = [];
 
@@ -426,7 +426,7 @@ class Service
     //vraca listu id-jeva koga sve user s danim id-jem followa
     //vraca null ako user ne followa nikoga
     function getFollowing( $id )
-    { 
+    {
         $param = [];
         $count = 0;
         $hasResults = FALSE;
@@ -454,17 +454,17 @@ class Service
         $param = [];
         $count = 0;
         $hasResults = FALSE;
-        
+
         $query = 'MATCH (follower:Person)-[:FOLLOWS]->(p:Person {id_person: $id_followed}) RETURN follower.id_person AS followerId';
         $results = $client->run($query, ['id_followed' => $id]);
-        
+
         foreach ($results as $result) {
             $node = $result->get('followerId');
             $param[] = $node;
             $hasResults = true;
             ++$count;
         }
-        
+
         if (!$hasResults) {
             return NULL;
         } else {
