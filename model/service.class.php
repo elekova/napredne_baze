@@ -207,6 +207,29 @@ class Service
 			
 	}
 
+	function unlikeBook( $id_person, $id_book)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'DELETE FROM like_book WHERE id_person = :id_person AND id_book = :id_book' );
+			$st->execute( array('id_person' => $id_person, 'id_book' => $id_book) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function doILikeBook( $id_person, $id_book)
+	{
+		try
+		{
+			$db = DB::getConnection();
+        	$st = $db->prepare('SELECT EXISTS(SELECT 1 FROM like_book WHERE id_person = :id_person AND id_book = :id_book)');
+        	$st->execute(array('id_person' => $id_person, 'id_book' => $id_book));
+
+        return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
 	//SPORT---------------------------------------------------------------------------------------------------------------------------
 	//funkcija koja vra�a sve ponu�ene sportove
 	function getAllSports()
@@ -229,7 +252,7 @@ class Service
 	}
 	
 	//funkcija koja omogu�ava korisniku $id_person da lajka sport $id_sport
-	function LikeSport($id_person, $id_sport)
+	function likeSport($id_person, $id_sport)
 	{
 		try
 		{
@@ -263,7 +286,40 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja sve ponu�ene bendove
+	// funkcija za dodavanje sporta u database sport
+	public function addSport ($type) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO sport (type) VALUES(:type)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+	//CLUB----------------------------------------------------------------------------------------------------------------
+
+	// funkcija za dodavanje kluba u database club
+	public function addClub ($name, $city, $country, $id_sporta) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO club (name, city, country, id_sporta) VALUES(:name, :city, :country, :id_sporta)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+	//BAND-----------------------------------------------------------------------------------------------------------------
+
 	function getAllBands()
 	{
 		try
@@ -283,8 +339,7 @@ class Service
 		return $arr;
 	}
 
-	//funkcija koja omogu�ava korisniku $id_person da lajka bend $id_band
-	function LikeBand($id_person, $id_band)
+	function likeBand($id_person, $id_band)
 	{
 		try
 		{
@@ -296,7 +351,6 @@ class Service
 
 	}
 
-	//funkcija koja vra�a bendove koji se svi�aju odre�enoj osobi s $id_person
 	function getLikedBands($id_person)
 	{
 		try
@@ -319,13 +373,29 @@ class Service
 		return $arr;
 	}
 
-	// funkcija koja vra�a sve ponu�ene filmove
+	// funkcija za dodavanje benda u database band
+	public function addBand ($name, $country, $genre) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO band (name, country, genre) VALUES(:name, :country, :genre)");
+			$st->execute ();
+		}
+		catch( PDOException $e ){
+			echo 'Greska u Service.class.php!';
+			return 0;
+		}
+
+	}
+
+	//MOVIES------------------------------------------------------------------------------------------------------------------
+
 	function getAllMovies()
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_movie, title, genre FROM movie ORDER BY title' );
+			$st = $db->prepare( 'SELECT * FROM movie ORDER BY title' );
 			$st->execute();
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
@@ -333,47 +403,54 @@ class Service
 		$arr = array();
 		while( $row = $st->fetch() )
 		{
-			$arr[] = new Movie( $row['id_movie'], $row['title'], $row['genre'] );
+			$arr[] = new Movie( $row['id_movie'], $row['title'], $row['director'], $row['year'], $row['genre'] );
 		}
-
 		return $arr;
 	}
 
-	//funkcija koja omogu�ava korisniku $id_person da lajka film $id_movie
-	function LikeMovie($id_person, $id_movie)
+	function likeMovie($id_person, $id_movie)
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare(  );
-			$st->execute();
+			$st = $db->prepare( 'INSERT INTO like_movie (id_person, id_movie) VALUES (:id_person, :id_movie)' );
+			$st->execute( array('id_person' => $id_person, 'id_movie' => $id_movie) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 	}
 
-	//funkcija koja vra�a filmove koji se svi�aju odre�enoj osobi s $id_person
 	function getLikedMovies($id_person)
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_movie, title, genre
+			$st = $db->prepare( 'SELECT m.id_movie, m.title, m.director, m.year, m.genre
 									FROM movie m
 									JOIN like_movie lm ON m.id_band = lm.id_band
 									WHERE lm.id_person = :id_person;' );
-			$st->execute();
-		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+			$st->execute( array( 'id_person' => $id_person ) );
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
 		while( $row = $st->fetch() )
 		{
-			$arr[] = new Movie( $row['id_movie'], $row['title'], $row['genre'] );
+			$arr[] = new Movie( $row['id_movie'], $row['title'], $row['director'], $row['year'], $row['genre'] );
 		}
-
 		return $arr;
 	}
+
+	public function addMovie ($title, $director, $year, $genre) {
+		$db = DB::getConnection();
+
+		try{
+			$st = $db->prepare("INSERT INTO movie (title, director, year, genre) VALUES(:title, :director, :year, :genre)");
+			$st->execute (array('title' => $title, 'director' => $director, 'year' => $year, 'genre' => $genre));
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+	}
+
+	//USER----------------------------------------------------------------------------------------------------------------
 
 	function checkUser($username, $password){
 		$db = DB::getConnection();
@@ -404,68 +481,6 @@ class Service
 				return 0;
 			}
 		}
-	}
-
-
-
-	// funkcija za dodavanje filma u database movie
-	public function AddMovie ($title, $director, $year, $genre) {
-		$db = DB::getConnection();
-
-		try{
-			$st = $db->prepare("INSERT INTO movie (title, director, year, genre) VALUES(:title, :director, :year, :genre)");
-			$st->execute ();
-		}
-		catch( PDOException $e ){
-			echo 'Greska u Service.class.php!';
-			return 0;
-		}
-
-	}
-
-	// funkcija za dodavanje sporta u database sport
-	public function AddSport ($type) {
-		$db = DB::getConnection();
-
-		try{
-			$st = $db->prepare("INSERT INTO sport (type) VALUES(:type)");
-			$st->execute ();
-		}
-		catch( PDOException $e ){
-			echo 'Greska u Service.class.php!';
-			return 0;
-		}
-
-	}
-
-	// funkcija za dodavanje kluba u database club
-	public function AddClub ($name, $city, $country, $id_sporta) {
-		$db = DB::getConnection();
-
-		try{
-			$st = $db->prepare("INSERT INTO club (name, city, country, id_sporta) VALUES(:name, :city, :country, :id_sporta)");
-			$st->execute ();
-		}
-		catch( PDOException $e ){
-			echo 'Greska u Service.class.php!';
-			return 0;
-		}
-
-	}
-
-	// funkcija za dodavanje benda u database band
-	public function AddBand ($name, $country, $genre) {
-		$db = DB::getConnection();
-
-		try{
-			$st = $db->prepare("INSERT INTO band (name, country, genre) VALUES(:name, :country, :genre)");
-			$st->execute ();
-		}
-		catch( PDOException $e ){
-			echo 'Greska u Service.class.php!';
-			return 0;
-		}
-
 	}
 	
 	//neo4j-------------------------------------------------------------------------------------------------------------------------------
@@ -569,7 +584,7 @@ class Service
 
     }
 
-    function removeFollow()
+    function removeFollow($follows, $followed)
     {
 		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
 		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
@@ -595,7 +610,23 @@ class Service
         }
     }
 
+	function doIFollowUser( $follows, $followed)
+	{
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
+		$hasResults = false;
+
+		$query = 'MATCH (follower:Person {id_person: $follows})-[f:FOLLOWS]->(followed:Person {id_person: $followed}) RETURN COUNT(*) AS count';
+		$result = $client->run($query, ['follows' => $follows, 'followed' => $followed]);
+		
+		foreach ($result as $res) {
+            $node = $res->get('count');
+			$hasResults = true;
+        }
+		return $hasResults;
+	}
 
 };
 

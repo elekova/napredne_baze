@@ -17,7 +17,10 @@ class BookController
         $liked_books = $service->getLikedBooks($id);
 
         $all_books = $service->getAllBooks();
-
+        $all_books_like = array();
+        foreach($all_books as $b){
+           $all_books_like[] = $service->doILikeBook( $id, $b->id_book);
+        }
         require_once __DIR__ . '/../view/book_index.php';
     }
 
@@ -47,6 +50,20 @@ class BookController
 		}
 		$this->index();
     }
+
+    function unlike()
+    {
+        if (isset($_POST['unlike'])) {
+            $service = new Service();
+            $id_book = $_POST['unlike'];
+            $person = $service->getPersonByUsername($_SESSION['username']);
+            $id = $person['id_person'];
+
+            $service->unlikeBook($id, $id_book);
+        }
+        $this->index();
+    }
+
 }
 
 ?>

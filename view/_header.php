@@ -18,6 +18,7 @@
 			<li><a href="index.php?rt=sport"> Sport </a></li>
 			<li><a href="index.php?rt=club"> Club </a></li>
 			<li><a href="index.php?rt=band"> Band </a></li>
+			<li><a href="index.php?rt=search"> Search </a></li>
 			<li><a href="index.php?rt=login/out"> Log out </a></li>
 		</ul>
 	</nav>

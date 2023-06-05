@@ -8,22 +8,37 @@ foreach( $liked_books as $b ){
    echo $b->title . '<br>';
    echo $b->author . '<br>';
    echo $b->year . '<br>';
-   echo '<br>';
+   ?>
+   <form action="index.php?rt=book/unlike" method="post">
+      <button type="submit" name="unlike" value="<?php echo $b->id_book; ?>">Unlike</button>
+   </form>
+   <br>
+   <?php
 }
 ?>
 <h2>All books:</h2>
 <br>
 <?php
-foreach( $all_books as $b ){
-   echo $b->title . '<br>';
-   echo $b->author . '<br>';
-   echo $b->year . '<br>';
-   ?>
+for( $i = 0; $i < count($all_books); ++$i ){
+   echo $all_books[$i]->title . '<br>';
+   echo $all_books[$i]->author . '<br>';
+   echo $all_books[$i]->year . '<br>';
+   if( $all_books_like[$i] == true ){
+      ?>
+      <form action="index.php?rt=book/unlike" method="post">
+         <button type="submit" name="unlike" value="<?php echo $b->id_book; ?>">Unlike</button>
+      </form>
+      <br>
+      <?php
+   } else{
+      ?>
    <form action="index.php?rt=book/like" method="post">
-   <button type="submit" name="like" value="<?php echo $b->id_book; ?>">Like</button>
+      <button type="submit" name="like" value="<?php echo $b->id_book; ?>">Like</button>
    </form>
    <br>
    <?php
+   }
+   
 }
 
 ?>
