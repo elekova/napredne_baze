@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../app/database/db.class.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once 'person.class.php';
+require_once 'book.class.php';
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
@@ -120,7 +121,7 @@ class Service
 	}
 
 	//MYCREW-----------------------------------------------------------------------------------------------------------------
-
+	//BOOK-------------------------------------------------------------------------------------------------------------------
 	function getBookByName( $name )
 	{
 		try
@@ -135,7 +136,7 @@ class Service
 		if( $row === false )
 			return null;
 		else
-			return new Book( $row['title'], $row['author'], $row['year'] );
+			return new Book( $row['id_book'], $row['title'], $row['author'], $row['year'] );
 	}
 
 	//funkcija koja vraca sve ponudjene knjige
@@ -144,7 +145,7 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_book, title, author FROM book ORDER BY author' );
+			$st = $db->prepare('SELECT * FROM book ORDER BY author');
 			$st->execute();
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
@@ -152,20 +153,20 @@ class Service
 		$arr = array();
 		while( $row = $st->fetch() )
 		{
-			$arr[] = new Book( $row['id_book'], $row['title'], $row['author'] );
+			$arr[] = new Book( $row['id_book'], $row['title'], $row['author'], $row['year'] );
 		}
 
 		return $arr;
 	}
 
-	//funkcija koja omogu�ava korisniku da lajka knjigu $id_book
-	function LikeBook($id_person, $id_book)
+
+	function likeBook($id_person, $id_book)
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare(  );
-			$st->execute();
+			$st = $db->prepare( 'INSERT INTO like_book (id_person, id_book) VALUES (:id_person, :id_book)' );
+			$st->execute( array('id_person' => $id_person, 'id_book' => $id_book) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -177,23 +178,36 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_book, title, author 
+			$st = $db->prepare( 'SELECT b.id_book, b.title, b.author, b.year
 									FROM book b 
 									JOIN like_book lb ON b.id_book = lb.id_book
 									WHERE lb.id_person = :id_person;' );
-			$st->execute();
+			$st->execute( array( 'id_person' => $id_person ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
 		while( $row = $st->fetch() )
 		{
-			$arr[] = new Book( $row['id_book'], $row['title'], $row['author'] );
+			$arr[] = new Book( $row['id_book'], $row['title'], $row['author'], $row['year'] );
 		}
 
 		return $arr;
 	}
 
+	// funkcija za dodavanje knjige u database book
+	public function addBook ($title, $author, $year) {
+		$db = DB::getConnection();
+	
+		try{
+			$st = $db->prepare("INSERT INTO book (title, author, year) VALUES (:title, :author, :year)");
+			$st->execute(array('title' => $title, 'author' => $author, 'year' => $year));
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+			
+	}
+
+	//SPORT---------------------------------------------------------------------------------------------------------------------------
 	//funkcija koja vra�a sve ponu�ene sportove
 	function getAllSports()
 	{
@@ -392,20 +406,7 @@ class Service
 		}
 	}
 
-	// funkcija za dodavanje knjige u database book
-	public function AddBook ($title, $author, $years) {
-		$db = DB::getConnection();
 
-		try{
-			$st = $db->prepare("INSERT INTO book (title, author, year) VALUES(:title, :author, :year)");
-			$st->execute ();
-		}
-		catch( PDOException $e ){
-			echo 'Greska u Service.class.php!';
-			return 0;
-		}
-		
-	}
 
 	// funkcija za dodavanje filma u database movie
 	public function AddMovie ($title, $director, $year, $genre) {

@@ -20,7 +20,7 @@ foreach ($usersList as $temp) {
         <?php
     }
     foreach ($temp as $key => $value) {
-        if( $key != 'password'){
+        if( $key !=='password' && $key !=='id_person'){
             echo $key . ': ' . $value . '<br>';
         }
     }
