@@ -1,9 +1,11 @@
+
 <?php
 
 
 
-	if(!isset($_SESSION['id_person'])){
+	if(!isset($_SESSION['username'])){
     	session_start();
+
     }
 
   // Provjeri je li postavljena varijabla rt; kopiraj ju u $route
@@ -11,6 +13,7 @@
     $route = $_GET['rt'];
   }
   else{
+
     $route = 'login';
   }
 
@@ -35,7 +38,7 @@ require_once $controllerFileName;
 // Stvori pripadni kontroler
 $con = new $controllerName;
 
-// Pozovi odgovarajuæu akciju
+// Pozovi odgovarajuÄ‡u akciju
 $con->$action();
 
 ?>
