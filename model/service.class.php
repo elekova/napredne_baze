@@ -18,19 +18,24 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT * FROM person_nova WHERE id_person=:id' );
+			$st = $db->prepare('SELECT * FROM person_nova WHERE id_person = :id');
 			$st->execute( array( 'id' => $id ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$row = $st->fetch();
+		$param = array ('id_person' => $row['id_person'], 'username' => $row['username'], 
+			'password' => $row['password'], 'name' => $row['name'], 'surname' => $row['surname'], 
+			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city'], 
+			'region' => $row['region'], 'date_of_birth' => $row['date_of_birth'] );
+		
 		if( $row === false )
 			return null;
 		else
-			return new Person( $row['id_person'], $row['username'], $row['password'], $row['name'], $row['surname'], $row['email'], $row['gender'] );
+			return $param;
 	}
 
-	function getPersonByName( $username )
+	function getPersonByUsername( $username )
 	{
 		try
 		{
@@ -43,7 +48,8 @@ class Service
 		$row = $st->fetch();
 		$param = array ('id_person' => $row['id_person'], 'username' => $row['username'], 
 			'password' => $row['password'], 'name' => $row['name'], 'surname' => $row['surname'], 
-			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city']);
+			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city'] ,
+			'region' => $row['region'], 'date_of_birth' => $row['date_of_birth']);
 		
 		if( $row === false )
 			return null;
@@ -62,6 +68,28 @@ class Service
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
 
+	function updateSurname($username, $surname)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET surname = :surname WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'surname' => $surname ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateEmail($username, $email)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET email = :email WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'email' => $email ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
 	function updateDate($username, $date)
 	{
 		try
@@ -72,6 +100,30 @@ class Service
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
+
+	function updateCity($username, $city)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET city = :city WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'city' => $city) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateRegion($username, $region)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET region = :region WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'region' => $region ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	//MYCREW-----------------------------------------------------------------------------------------------------------------
 
 	function getBookByName( $name )
 	{

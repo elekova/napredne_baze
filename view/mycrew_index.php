@@ -26,21 +26,18 @@ if( $person['gender'] === 'female'){
     echo '<br>';
     echo $person['surname'];
     echo '<br>';
-    echo $person['email'];
+    echo $person['date_of_birth'];
     echo '<br>';
     echo $person['gender'];
     echo '<br>';
+    echo $person['email'];
+    echo '<br>';
     echo $person['city'];
+    echo '<br>';
+    echo $person['region'];
  ?>
 </div>
-<?php
-/*
-<br>
-<form method="post" action="view/update_index.php">
-    <button type="submit" name="edit">Edit profile!</button>
-</form>
-*/
-?>
+
 <div class="form">
 <p>Update your profile:</p>
     <form method="post" action="index.php?rt=mycrew/update">
