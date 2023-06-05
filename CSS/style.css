@@ -41,3 +41,16 @@ p {
   color: #333;
   font-style: italic;
 }
+
+.container {
+  display: flex;
+}
+
+.user-info {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.form {
+  flex: 1;
+}

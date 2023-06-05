@@ -2,13 +2,11 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/database/db.class.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once 'person.class.php';
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
-
-$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
-$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
-$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
 class Service
 {
@@ -17,34 +15,112 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_person, username, name, surname, password FROM person WHERE id=:id' );
-			$st->execute( array( 'id_person' => $id ) );
+			$st = $db->prepare('SELECT * FROM person_nova WHERE id_person = :id');
+			$st->execute( array( 'id' => $id ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$row = $st->fetch();
+		$param = array ('id_person' => $row['id_person'], 'username' => $row['username'],
+			'password' => $row['password'], 'name' => $row['name'], 'surname' => $row['surname'],
+			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city'],
+			'region' => $row['region'], 'date_of_birth' => $row['date_of_birth'] );
+
 		if( $row === false )
 			return null;
 		else
-			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'], $row['password'] );
+			return $param;
 	}
 
-	function getPersonByName( $username )
+	function getPersonByUsername( $username )
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare('SELECT id_person, username, name, surname, password FROM person WHERE username = :username');
+			$st = $db->prepare('SELECT * FROM person_nova WHERE username = :username');
 			$st->execute( array( 'username' => $username ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$row = $st->fetch();
+		$param = array ('id_person' => $row['id_person'], 'username' => $row['username'],
+			'password' => $row['password'], 'name' => $row['name'], 'surname' => $row['surname'],
+			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city'] ,
+			'region' => $row['region'], 'date_of_birth' => $row['date_of_birth']);
+
 		if( $row === false )
 			return null;
 		else
-			return new Person( $row['id_person'], $row['username'], $row['name'], $row['surname'] );
+			return $param;
 	}
+
+	function updateName($username, $name)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET name = :name WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'name' => $name ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateSurname($username, $surname)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET surname = :surname WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'surname' => $surname ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateEmail($username, $email)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET email = :email WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'email' => $email ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateDate($username, $date)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET date_of_birth = :date WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'date' => $date ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateCity($username, $city)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET city = :city WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'city' => $city) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function updateRegion($username, $region)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('UPDATE person_nova SET region = :region WHERE username = :username');
+			$st->execute( array( 'username' => $username , 'region' => $region ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	//MYCREW-----------------------------------------------------------------------------------------------------------------
 
 	function getBookByName( $name )
 	{
@@ -397,6 +473,9 @@ class Service
 	function getUserById( $id )
     {
         //ID MORA BITI STRING!
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
         $idString = strval( $id );
         $results = $client->run('MATCH (p:Person {id_person: $id}) RETURN p', ['id' => $idString]);
 
@@ -411,6 +490,9 @@ class Service
 
     function getUserByUsername( $username )
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
         $results = $client->run('MATCH (p:Person {username: $ime}) RETURN p', ['ime' => $username]);
         $param = [];
@@ -427,6 +509,10 @@ class Service
     //vraca null ako user ne followa nikoga
     function getFollowing( $id )
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $param = [];
         $count = 0;
         $hasResults = FALSE;
@@ -451,6 +537,10 @@ class Service
     //ako nema pratitelja vraca NULL
     function getFollowers( $id )
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $param = [];
         $count = 0;
         $hasResults = FALSE;
@@ -474,6 +564,10 @@ class Service
 
     function addFollow( $follows, $followed)
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $query = 'MATCH (p1:Person {username: $follows}), (p2:Person {username: $followed}) CREATE (p1)-[:FOLLOWS]->(p2)';
         $client->run($query, ['follows' => $follows, 'followed' => $followed]);
 
@@ -481,12 +575,19 @@ class Service
 
     function removeFollow()
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
         $query = 'MATCH (p1:Person {username: $follows})-[r:FOLLOWS]->(p2:Person {username: $followed}) DELETE r';
         $client->run($query, ['follows' => $follows, 'followed' => $followed]);
     }
 
     function addUser( $id, $username, $name, $surname)
     {
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
         $query = 'CREATE (p:Person {id_person : $id , username: $username, name: $name, surname: $surname}) RETURN p';
         $result = $client->run($query, ['id' => $id, 'username' => $username, 'name' => $name, 'surname' => $surname]);
