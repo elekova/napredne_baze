@@ -4,13 +4,17 @@ class PersonController extends BaseController
 {
     function index()
     {
-     
+        //prikazuje podatke o useru
+        $user = $_SESSION['username'];
+        $service = new Service();
+        $this->registry->template->title = 'My profile';
+        $this->registry->template->userList = $ls->getAllUsers();
+        
+        $this->registry->template->show( 'person_index' );
+
     }
 
-    function getUser( $username )
-    {
-        
-    }
+
 
     function addFriendAction($userId, $friendId)
     {
@@ -42,6 +46,10 @@ class PersonController extends BaseController
     }
 
     // Ostale akcije vezane uz upravljanje vezama
+
+
+    
 }
+
 
 ?>
