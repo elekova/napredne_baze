@@ -514,7 +514,7 @@ class Service
 
         $param = [];
         $count = 0;
-        $hasResults = FALSE;
+        $hasResults = false;
 
         $query = 'MATCH (p:Person {id_person: $id_follows})-[:FOLLOWS]->(followed:Person) RETURN followed.id_person AS followedId';
         $results = $client->run($query, ['id_follows' => $id]);
@@ -523,7 +523,6 @@ class Service
             $node = $result->get('followedId');
             $param[] = $node;
             $hasResults = true;
-            ++$count;
         }
         if (!$hasResults) {
             return NULL;
