@@ -1,58 +1,83 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 <?php require_once __DIR__ . '/../model/service.class.php';?>
 
-<div class="form-container">
-
     <h2>Liked clubs of <?php echo $currentUser; ?>:</h2>
-    <br>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Sport</th>
+            <th></th>
+        </tr>
+        <?php
+        foreach ($liked_clubs as $b) {
+        ?>
+            <tr>
+                <td><?php echo $b->name; ?></td>
+                <td><?php echo $b->city; ?></td>
+                <td><?php echo $b->country; ?></td>
+                <td>
+                    <?php
+                    $service = new Service();
+                    $sport = $service->getSportById($b->id_sport);
+                    echo $sport->type;
+                    ?>
+                </td>
+                <td>
+                    <form action="index.php?rt=club/unlike" method="post">
+                        <button class="red" type="submit" name="unlike" value="<?php echo $b->id_club; ?>">Unlike</button>
+                    </form>
+                </td>
+            </tr>
+        <?php
+        }
+        ?>
+    </table>
 
-    <?php
-    foreach( $liked_clubs as $b ){
-       echo $b->name . '<br>';
-       echo $b->city . '<br>';
-       echo $b->country . '<br>';
-       
-       $service= new Service();
-       $sport = $service->getSportById($b->id_sport);
-       echo $sport->type . '<br>';
-       ?>
-       <form action="index.php?rt=club/unlike" method="post">
-          <button class = "red" type="submit" name="unlike" value="<?php echo $b->id_club; ?>">Unlike</button>
-      </form>
-       <br>
-       <?php
-    }
-    ?>
     <h2>All clubs:</h2>
-    <br>
-    <?php
-    for( $i = 0; $i < count($all_clubs); ++$i ){
-       echo $all_clubs[$i]->name . '<br>';
-       echo $all_clubs[$i]->city . '<br>';
-       echo $all_clubs[$i]->country . '<br>';
-       $service= new Service();
-       $sport = $service->getSportById($all_clubs[$i]->id_sport);
-       echo $sport->type . '<br>';
-       if( $all_clubs_like[$i] == true ){
-          ?>
-          <form action="index.php?rt=club/unlike" method="post">
-             <button class = "red" type="submit" name="unlike" value="<?php echo $all_clubs[$i]->id_club; ?>">Unlike</button>
-          </form>
-          <br>
-          <?php
-       } else{
-          ?>
-       <form action="index.php?rt=club/like" method="post">
-          <button type="submit" name="like" value="<?php echo $all_clubs[$i]->id_club; ?>">Like</button>
-       </form>
-       <br>
-       <?php
-       }
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Sport</th>
+            <th></th>
+        </tr>
+        <?php
+        for ($i = 0; $i < count($all_clubs); ++$i) {
+        ?>
+            <tr>
+                <td><?php echo $all_clubs[$i]->name; ?></td>
+                <td><?php echo $all_clubs[$i]->city; ?></td>
+                <td><?php echo $all_clubs[$i]->country; ?></td>
+                <td>
+                    <?php
+                    $service = new Service();
+                    $sport = $service->getSportById($all_clubs[$i]->id_sport);
+                    echo $sport->type;
+                    ?>
+                </td>
+                <?php if ($all_clubs_like[$i] == true) { ?>
+                    <td>
+                        <form action="index.php?rt=club/unlike" method="post">
+                            <button class="red" type="submit" name="unlike" value="<?php echo $all_clubs[$i]->id_club; ?>">Unlike</button>
+                        </form>
+                    </td>
+                <?php } else { ?>
+                    <td>
+                        <form action="index.php?rt=club/like" method="post">
+                            <button type="submit" name="like" value="<?php echo $all_clubs[$i]->id_club; ?>">Like</button>
+                        </form>
+                    </td>
+                <?php } ?>
+            </tr>
+        <?php
+        }
+        ?>
+    </table>
 
-    }
-
-    ?>
-
+<div class="form-container">
    <form action="index.php?rt=club/insert" method="post">
       <h3>Add new club</h3>
       <?php

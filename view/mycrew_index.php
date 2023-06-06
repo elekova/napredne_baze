@@ -18,45 +18,32 @@ if( $person['gender'] === 'female'){
 }
 ?>
 
- <?php
-    echo '<br>';
-    echo "username: " . $person['username'];
-    echo '<br>';
-    echo "name: " . $person['name'];
-    echo '<br>';
-    echo "surname: " . $person['surname'];
-    echo '<br>';
-    echo "date od birth: " . $person['date_of_birth'];
-    echo '<br>';
-    echo "gender: " . $person['gender'];
-    echo '<br>';
-    echo "email: " . $person['email'];
-    echo '<br>';
-    echo "city: " . $person['city'];
-    echo '<br>';
-    echo "region: " . $person['region'];
- ?>
+<ul>
+    <li>username: <?php echo $person['username']; ?></li>
+    <li>name: <?php echo $person['name']; ?></li>
+   <li>surname: <?php echo $person['surname']; ?></li>
+    <li>date of birth: <?php echo $person['date_of_birth']; ?></li>
+    <li>gender: <?php echo $person['gender']; ?></li>
+    <li>email: <?php echo $person['email']; ?></li>
+    <li>city: <?php echo $person['city']; ?></li>
+    <li>region: <?php echo $person['region']; ?></li>
+</ul>
 </div>
 
-<div class="form">
-<p>Update your profile:</p>
+<div class="form-container">
     <form method="post" action="index.php?rt=mycrew/update">
-        <p>New name:</p>
-            <input type="text" name="name">
-        <p>New surname:</p>
-            <input type="text" name="surname">
-        <p>New email:</p>
-            <input type="text" name="email">
-        <p>New date:</p>
+    <h3>Update your profile:</h3>
+            <input type="text" name="name" placeholder="enter new name">
+            <input type="text" name="surname" placeholder="enter new surname">
+            <input type="text" name="email" placeholder="enter new email">
+            <input type="text" name="city" placeholder="enter new city">
+            <input type="text" name="region" placeholder="enter new region">
+            <p>enter new date</p>
             <input type="date" name="date">
-        <p>New city:</p>
-            <input type="text" name="city">
-        <p>New region:</p>
-            <input type="text" name="region">
         <br>
         <br>
         <button type="submit" name="save">Save changes!</button>
     </form>
-</div>
+</div> 
 </div>
 <?php require_once __DIR__ . '/_footer.php'; ?>
