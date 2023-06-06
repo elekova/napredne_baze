@@ -8,6 +8,8 @@ require_once 'book.class.php';
 require_once 'movie.class.php';
 require_once 'sport.class.php';
 require_once 'club.class.php';
+require_once 'band.class.php';
+
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
@@ -243,6 +245,7 @@ class Service
 		{
 			$db = DB::getConnection();
 			$st = $db->prepare('SELECT * FROM sport WHERE type = :type');
+
 			$st->execute( array( 'type' => $type ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
@@ -478,15 +481,15 @@ class Service
 		}
 
 	}
-
-/*	//BAND-----------------------------------------------------------------------------------------------------------------
+//CLUB----------------------------------------------------------------------------------------------------------------------
+//BAND-----------------------------------------------------------------------------------------------------------------
 
 	function getAllBands()
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_band, name, genre FROM band ORDER BY name' );
+			$st = $db->prepare( 'SELECT * FROM band ORDER BY name' );
 			$st->execute();
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
@@ -494,7 +497,7 @@ class Service
 		$arr = array();
 		while( $row = $st->fetch() )
 		{
-			$arr[] = new Band( $row['id_band'], $row['name'], $row['genre'] );
+			$arr[] = new Band( $row['id_band'], $row['name'],  $row['country'],$row['genre'] );
 		}
 
 		return $arr;
@@ -505,8 +508,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare(  );
-			$st->execute();
+			$st = $db->prepare( 'INSERT INTO like_band (id_person, id_band) VALUES (:id_person, :id_band)' );
+			$st->execute( array('id_person' => $id_person, 'id_band' => $id_band) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -517,37 +520,57 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_band, name, genre
+			$st = $db->prepare( 'SELECT b.id_band, b.name, b.country, b.genre
 									FROM band b
 									JOIN like_band lb ON b.id_band = lb.id_band
 									WHERE lb.id_person = :id_person;' );
-			$st->execute();
+			$st->execute(array('id_person' => $id_person));
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
 		while( $row = $st->fetch() )
 		{
-			$arr[] = new Band( $row['id_band'], $row['name'], $row['genre'] );
+			$arr[] = new Band( $row['id_band'], $row['name'],  $row['country'],$row['genre'] );
 		}
 
 		return $arr;
 	}
 
-	// funkcija za dodavanje benda u database band
+
+
 	public function addBand ($name, $country, $genre) {
 		$db = DB::getConnection();
 
 		try{
-			$st = $db->prepare("INSERT INTO band (name, country, genre) VALUES(:name, :country, :genre)");
-			$st->execute ();
-		}
-		catch( PDOException $e ){
-			echo 'Greska u Service.class.php!';
-			return 0;
-		}
+			$st = $db->prepare("INSERT INTO band (name, country, genre) VALUES(:name, :country,  :genre)");
+			$st->execute (array('name' => $name, 'country' => $country, 'genre' => $genre));
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
-	}*/
+	}
+
+	function unlikeBand( $id_person, $id_band)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'DELETE FROM like_band WHERE id_person = :id_person AND id_band = :id_band' );
+			$st->execute( array('id_person' => $id_person, 'id_band' => $id_band) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function doILikeBand( $id_person, $id_band)
+	{
+		try
+		{
+			$db = DB::getConnection();
+        	$st = $db->prepare('SELECT EXISTS(SELECT 1 FROM like_band WHERE id_person = :id_person AND id_band = :id_band)');
+        	$st->execute(array('id_person' => $id_person, 'id_band' => $id_band));
+
+        return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
 
 	//MOVIES------------------------------------------------------------------------------------------------------------------
 
