@@ -8,33 +8,33 @@
 if( $person['gender'] === 'female'){
     ?>
     <br>
-    <img src="view/female.jpg" alt="Gender: female">
+    <img src="view/female.jpg" class = gender alt="Gender: female">
     <?php
 } else {
     ?>
     <br>
-    <img src="view/male.jpg" alt="Gender: male">
+    <img src="view/male.jpg"class = gender alt="Gender: male">
     <?php
 }
 ?>
 
  <?php
     echo '<br>';
-    echo $person['username'];
+    echo "username: " . $person['username'];
     echo '<br>';
-    echo $person['name'];
+    echo "name: " . $person['name'];
     echo '<br>';
-    echo $person['surname'];
+    echo "surname: " . $person['surname'];
     echo '<br>';
-    echo $person['date_of_birth'];
+    echo "date od birth: " . $person['date_of_birth'];
     echo '<br>';
-    echo $person['gender'];
+    echo "gender: " . $person['gender'];
     echo '<br>';
-    echo $person['email'];
+    echo "email: " . $person['email'];
     echo '<br>';
-    echo $person['city'];
+    echo "city: " . $person['city'];
     echo '<br>';
-    echo $person['region'];
+    echo "region: " . $person['region'];
  ?>
 </div>
 

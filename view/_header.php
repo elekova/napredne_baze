@@ -6,7 +6,10 @@
 	<link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-	<h1><?php echo $title; ?></h1>
+	<div class = naslovnatraka>
+		<img src="earth.png" class = earth alt="slikica">
+		<h1><?php echo $title; ?></h1>
+	</div>
 <?php  if(isset($_SESSION['username'])){?>
 	<nav>
 		<ul>

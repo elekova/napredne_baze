@@ -9,13 +9,13 @@ foreach ($usersList as $temp) {
     if( $temp['gender'] === 'female'){
         ?>
         <br>
-        <img src="view/female.jpg" alt="Gender: female">
+        <img src="view/female.jpg" class = gender alt="Gender: female">
         <br>
         <?php
     } else {
         ?>
         <br>
-        <img src="view/male.jpg" alt="Gender: male">
+        <img src="view/male.jpg" class = gender alt="Gender: male">
         <br>
         <?php
     }
@@ -27,7 +27,7 @@ foreach ($usersList as $temp) {
     }
     ?>
     <form action="index.php?rt=follow/unfollow" method="post">
-        <button type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
+        <button class = "red" type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
     </form>
     <br>
     <?php

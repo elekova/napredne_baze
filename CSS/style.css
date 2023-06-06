@@ -1,41 +1,107 @@
 /* Osnovni stil stranice */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-  padding: 20px;
-  text-align: center;
+    font-family: "Lucida Console", "Courier New", monospace;
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
 }
 
 /* Stil za naslov */
 h1 {
-  color: #333;
+    color: #333;
+    font-family: "Lucida Console", "Courier New", monospace;
+    text-align: center;
 }
 
-/* Stil za navigaciju */
+/* stil za naslovnu traku */
+.naslovnatraka {
+    display: flex;
+    border: 15px solid green;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+/* stil za sliku earth */
+img.earth {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+
+/* stil za sliku gender */
+img.gender {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* stil za navigaciju */
 nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    background-color: rgb(0, 128, 0);
 }
 
 nav ul li {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 nav ul li a {
-  color: #333;
-  text-decoration: none;
-  padding: 5px;
-  border-radius: 3px;
+    color: #fff; /* Bijeli tekst */
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 3px;
 }
 
 nav ul li a:hover {
-  background-color: #333;
-  color: #fff;
+    background-color: #333;
+    color: #fff;
 }
 
+
+input[type=text], input[type=password] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: rgb(0, 128, 0);
+    color: white;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+button.red {
+    background-color: red;
+    color: white;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.formbtn {
+    background-color: rgb(0, 128, 0);
+    color: white;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
 /* Stil za poruku samo nekaj ispis */
 p {
   color: #333;
@@ -47,8 +113,8 @@ p {
 }
 
 .user-info {
-  flex: 1;
-  margin-right: 20px;
+    flex: 1;
+    margin-right: 20px;
 }
 
 .form {
