@@ -6,6 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once 'person.class.php';
 require_once 'book.class.php';
 require_once 'movie.class.php';
+require_once 'sport.class.php';
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
@@ -234,12 +235,12 @@ class Service
 
 	//SPORT---------------------------------------------------------------------------------------------------------------------------
 	//funkcija koja vra�a sve ponu�ene sportove
-	/*function getAllSports()
+	function getAllSports()
 	{
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_sport, type FROM sport ORDER BY type' );
+			$st = $db->prepare( 'SELECT * FROM sport ORDER BY type' );
 			$st->execute();
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
@@ -259,8 +260,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare(  );
-			$st->execute();
+			$st = $db->prepare( 'INSERT INTO like_sport (id_person, id_sport) VALUES (:id_person, :id_sport)' );
+			$st->execute( array('id_person' => $id_person, 'id_sport' => $id_sport) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
@@ -271,11 +272,11 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT id_sport, type
+			$st = $db->prepare( 'SELECT s.id_sport, s.type
 									FROM sport s
 									JOIN like_sport ls ON s.id_sport = ls.id_sport
-									WHERE lb.id_person = :id_person;' );
-			$st->execute();
+									WHERE ls.id_person = :id_person;' );
+			$st->execute(array('id_person' => $id_person));
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
@@ -294,7 +295,7 @@ class Service
 
 		try{
 			$st = $db->prepare("INSERT INTO sport (type) VALUES(:type)");
-			$st->execute ();
+			$st->execute (array('type' => $type));
 		}
 		catch( PDOException $e ){
 			echo 'Greska u Service.class.php!';
@@ -302,7 +303,29 @@ class Service
 		}
 
 	}
+	function unlikeSport( $id_person, $id_sport)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'DELETE FROM like_sport WHERE id_person = :id_person AND id_book = :id_sport' );
+			$st->execute( array('id_person' => $id_person, 'id_sport' => $id_sport) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
 
+	function doILikeSport( $id_person, $id_sport)
+	{
+		try
+		{
+			$db = DB::getConnection();
+        	$st = $db->prepare('SELECT EXISTS(SELECT 1 FROM like_sport WHERE id_person = :id_person AND id_sport = :id_sport)');
+        	$st->execute(array('id_person' => $id_person, 'id_sport' => $id_sport));
+
+        return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+/*
 	//CLUB----------------------------------------------------------------------------------------------------------------
 
 	// funkcija za dodavanje kluba u database club
