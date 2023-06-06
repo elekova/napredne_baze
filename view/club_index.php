@@ -3,7 +3,7 @@
 
 <div class="form-container">
 
-    <h2>Current user: <?php echo $currentUser; ?> liked clubs:</h2>
+    <h2>Liked clubs of <?php echo $currentUser; ?>:</h2>
     <br>
 
     <?php
@@ -17,7 +17,7 @@
        echo $sport->type . '<br>';
        ?>
        <form action="index.php?rt=club/unlike" method="post">
-          <button type="submit" name="unlike" value="<?php echo $b->id_club; ?>">Unlike</button>
+          <button class = "red" type="submit" name="unlike" value="<?php echo $b->id_club; ?>">Unlike</button>
       </form>
        <br>
        <?php
@@ -36,7 +36,7 @@
        if( $all_clubs_like[$i] == true ){
           ?>
           <form action="index.php?rt=club/unlike" method="post">
-             <button type="submit" name="unlike" value="<?php echo $all_clubs[$i]->id_club; ?>">Unlike</button>
+             <button class = "red" type="submit" name="unlike" value="<?php echo $all_clubs[$i]->id_club; ?>">Unlike</button>
           </form>
           <br>
           <?php
@@ -69,7 +69,8 @@
 
 
       </select>
-      <input type="submit" name="add club" value="add club" class="form-btn">
+     <br></br>
+     <button type="submit" name="add club" value="Add club">Add Club</button>
    </form>
 
 </div>

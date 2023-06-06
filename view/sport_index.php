@@ -3,7 +3,7 @@
 <div class="form-container">
 
 
-    <h2>Current user: <?php echo $currentUser; ?> liked sports:</h2>
+    <h2>Liked sports of <?php echo $currentUser; ?>:</h2>
     <br>
 
     <?php
@@ -12,7 +12,7 @@
 
        ?>
        <form action="index.php?rt=sport/unlike" method="post">
-          <button type="submit" name="unlike" value="<?php echo $b->id_sport; ?>">Unlike</button>
+          <button class = "red" type="submit" name="unlike" value="<?php echo $b->id_sport; ?>">Unlike</button>
        </form>
        <br>
        <?php
@@ -27,7 +27,7 @@
        if( $all_sports_like[$i] == true ){
           ?>
           <form action="index.php?rt=sport/unlike" method="post">
-             <button type="submit" name="unlike" value="<?php echo $all_sports[$i]->id_sport; ?>">Unlike</button>
+             <button class ="red" type="submit" name="unlike" value="<?php echo $all_sports[$i]->id_sport; ?>">Unlike</button>
           </form>
           <br>
           <?php
@@ -55,7 +55,8 @@
       ?>
       <input type="text" name="type" required placeholder="enter sport name">
       </select>
-      <input type="submit" name="add sport" value="add sport" class="form-btn">
+      <br></br>
+      <button type="submit" name="add sport" value="Add sport">Add Sport</button>
    </form>
 
 </div>

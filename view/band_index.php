@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Current user: <?php echo $currentUser; ?> liked bands:</h2>
+<h2>Liked bands of <?php echo $currentUser; ?>:</h2>
 <br>
 
 <?php
@@ -10,7 +10,7 @@ foreach( $liked_bands as $b ){
    echo $b->genre . '<br>';
    ?>
    <form action="index.php?rt=band/unlike" method="post">
-      <button type="submit" name="unlike" value="<?php echo $b->id_band; ?>">Unlike</button>
+      <button class = "red" type="submit" name="unlike" value="<?php echo $b->id_band; ?>">Unlike</button>
    </form>
    <br>
    <?php
@@ -26,7 +26,7 @@ for( $i = 0; $i < count($all_bands); ++$i ){
    if( $all_bands_like[$i] == true ){
       ?>
       <form action="index.php?rt=band/unlike" method="post">
-         <button type="submit" name="unlike" value="<?php echo $all_bands[$i]->id_band; ?>">Unlike</button>
+         <button class = "red" type="submit" name="unlike" value="<?php echo $all_bands[$i]->id_band; ?>">Unlike</button>
       </form>
       <br>
       <?php
@@ -59,7 +59,8 @@ for( $i = 0; $i < count($all_bands); ++$i ){
       <input type="text" name="country" required placeholder="enter country">
       <input type="text" name="genre" required placeholder="enter genre">
       </select>
-      <input type="submit" name="add band" value="add band" class="form-btn">
+      <br></br>
+      <button type="submit" name="add band" value="Add band">Add band</button>
    </form>
 
 </div>

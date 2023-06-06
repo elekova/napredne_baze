@@ -1,7 +1,6 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Current user: <?php echo $currentUser; ?></h2>
-<h2>Liked books:<h2>
+<h2>Liked books of <?php echo $currentUser; ?>:</h2>
 <br>
 
 <?php
@@ -27,11 +26,8 @@ for( $i = 0; $i < count($all_books); ++$i ){
    if( $all_books_like[$i] == true ){
       ?>
       <form action="index.php?rt=book/unlike" method="post">
-<<<<<<< HEAD
          <button class = "red" type="submit" name="unlike" value="<?php echo $b->id_book; ?>">Unlike</button>
-=======
-         <button type="submit" name="unlike" value="<?php echo $all_books[$i]->id_book; ?>">Unlike</button>
->>>>>>> 29746755ff26413d207d8b5a34a6f1d6a78455d3
+
       </form>
       <br>
       <?php
@@ -57,7 +53,7 @@ for( $i = 0; $i < count($all_books); ++$i ){
       <input type="text" name="author" required placeholder="enter author">
       <input type="text" name="year" required placeholder="enter year">
       <br></br>
-      <input type="submit" name="add book" value="Add book" class="form-btn">
+      <button type="submit" name="add book" value="Add book">Add Book</button>
    </form>
 
 </div>

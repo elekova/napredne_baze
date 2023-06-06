@@ -3,7 +3,7 @@
 <div class="form-container">
 
 
-    <h2>Current user: <?php echo $currentUser; ?> liked movies:</h2>
+    <h2>Liked movies of <?php echo $currentUser; ?></h2>
     <br>
 
     <?php
@@ -14,7 +14,7 @@
        echo $b->genre . '<br>';
        ?>
        <form action="index.php?rt=movie/unlike" method="post">
-          <button type="submit" name="unlike" value="<?php echo $b->id_movie; ?>">Unlike</button>
+          <button class = "red" type="submit" class = "red" name="unlike" value="<?php echo $b->id_movie; ?>">Unlike</button>
        </form>
        <br>
        <?php
@@ -31,7 +31,7 @@
        if( $all_movies_like[$i] == true ){
           ?>
           <form action="index.php?rt=movie/unlike" method="post">
-             <button type="submit" name="unlike" value="<?php echo $all_movies[$i]->id_movie; ?>">Unlike</button>
+             <button class = "red" type="submit" name="unlike" value="<?php echo $all_movies[$i]->id_movie; ?>">Unlike</button>
           </form>
           <br>
           <?php
@@ -66,7 +66,8 @@
       <input type="text" name="genre" required placeholder="enter genre">
 
       </select>
-      <input type="submit" name="add movie" value="add movie" class="form-btn">
+      <br></br>
+      <button type="submit" name="add movie" value="Add movie">Add Movie</button>
    </form>
 
 </div>
