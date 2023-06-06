@@ -950,6 +950,26 @@ class Service
 
 	}
 
+	function updateUserName( $username , $name )
+	{
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
+		$query = 'MATCH (p:Person {username: $username}) SET p.name = $name ';
+        $results = $client->run($query, ['username' => $username , 'name' => $name]);
+	}
+
+	function updateUserSurname( $username , $surname )
+	{
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
+		$query = 'MATCH (p:Person {username: $username}) SET p.surname = $surname ';
+        $results = $client->run($query, ['username' => $username, 'surname' => $surname] );
+	}
+
 };
 
 ?>

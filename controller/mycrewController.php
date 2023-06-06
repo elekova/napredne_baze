@@ -24,9 +24,11 @@ class MycrewController
 			$service= new Service();
 			if( isset($_POST['name']) && $_POST['name'] !== ''){
 				$service->updateName($_SESSION['username'], $_POST['name']);
+				$service->updateUserName($_SESSION['username'], $_POST['name']);
 			}
 			if( isset($_POST['surname']) && $_POST['surname'] !== ''){
 				$service->updateSurname($_SESSION['username'], $_POST['surname']);
+				$service->updateUserSurname($_SESSION['username'], $_POST['surname']);
 			}
 			if( isset($_POST['email']) && $_POST['email'] !== ''){
 				$service->updateEmail($_SESSION['username'], $_POST['email']);
