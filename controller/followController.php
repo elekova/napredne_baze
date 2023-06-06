@@ -20,13 +20,14 @@ class FollowController
 		$service= new Service();
 		$person = $service->getPersonByUsername($_SESSION['username']);
 
-        $id = $person['id_person'];
-        $usersList = array();
+        $id_ = $person['id_person'];
+        $id = strval($id_);
+        $usersList = [];
         $following = $service->getFollowing($id);
 
-        foreach($following as $temp){
-            echo gettype($temp);
-            $usersList[] = $service->getPersonById($temp);
+        foreach ($following as $user) {
+            $user = $service->getPersonById($user);
+            $usersList[$user['id_person']] = $user;
         }
 
 		require_once __DIR__ . '/../view/following_index.php';
@@ -43,15 +44,17 @@ class FollowController
 		$service= new Service();
 		$person = $service->getPersonByUsername($_SESSION['username']);
 
-        $id = $person['id_person'];
-        $usersList[] = array();
-        $following = $service->getFollowed($_SESSION['username']);
+        $id_ = $person['id_person'];
+        $id = strval($id_);
+        $usersList = [];
+        $following = $service->getFollowers($id);
 
-        foreach($following as $temp){
-            $usersList[] = $service->getPersonById($temp);
+        foreach ($following as $user) {
+            $user = $service->getPersonById($user);
+            $usersList[$user['id_person']] = $user;
         }
 
-		require_once __DIR__ . '/../view/following_index.php';
+		require_once __DIR__ . '/../view/followers_index.php';
     }
  }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 id_person;username;password;name;surname;email;gender;date_of_birth;city;region
 0;koki_smoki;kkk453;Iva;Brisko;iva.brisko@gmail.com;female;;;
 0;fifi889;45fs;Kaja;Katic;kaja.katic@gmail.com;female;;;
@@ -14,3 +15,21 @@ id_person;username;password;name;surname;email;gender;date_of_birth;city;region
 0;kike00;oppp;Kristina;Krstic;kaja.katic@gmail.com;female;;;
 0;lilee;pi314;Lidija;Novak;kaja.katic@gmail.com;female;;;
 0;toni;jjrj;Antonio;Ilic;kaja.katic@gmail.com;male;;;
+=======
+id_person;username;password;name;surname;email;gender;date_of_birth;city;region
+0;koki_smoki;kkk453;Iva;Brisko;iva.brisko@gmail.com;female;;;
+0;fifi889;45fs;Kaja;Katic;kaja.katic@gmail.com;female;;;
+0;tina122;ggg111;Tina;Slisko;kaja.katic@gmail.com;female;;;
+0;emili_k;9990j;Emilija;Kokic;kaja.katic@gmail.com;female;;;
+0;rik_pik;rarara;Rikard;Aldo;kaja.katic@gmail.com;male;;;
+0;nikica;45ooo;Nikola;Ledinko;kaja.katic@gmail.com;male;;;
+0;zmajica123;tikitiki;Ognjena;Kolar;kaja.katic@gmail.com;female;;;
+0;ulicar_3;pppp0;Petar;Akmacic;kaja.katic@gmail.com;male;;;
+0;pipi_carapa;zizi88;Paloma;Rutic;kaja.katic@gmail.com;female;;;
+0;asteriks;wert;Tijan;Mladic;kaja.katic@gmail.com;male;;;
+0;heroj45;edii;Edi;Kovacic;kaja.katic@gmail.com;male;;;
+0;gum_bum;uuu9;Bojan;Bombic;kaja.katic@gmail.com;male;;;
+0;kike00;oppp;Kristina;Krstic;kaja.katic@gmail.com;female;;;
+0;lilee;pi314;Lidija;Novak;kaja.katic@gmail.com;female;;;
+0;toni;jjrj;Antonio;Ilic;kaja.katic@gmail.com;male;;;
+>>>>>>> 9027f7d83ef4e62793b598769dcda39b092e5ee4
