@@ -16,8 +16,9 @@ class searchController
 			$service= new Service();
             if( isset($_POST['username']) && $_POST['username'] !== ''){
 				$person = $service->getPersonByUsername($_POST['username']);
-                
-                $id = $service->getPersonByUsername( $_SESSION['username']);
+
+                $personFollowing = $service->getPersonByUsername($_SESSION['username']);
+                $idFollowing = strval($personFollowing['id_person']);
 
                 if( $person === null ){
                     $title = "No results!";
@@ -25,9 +26,19 @@ class searchController
                     exit();
                 } else{
                     $title = "Search result!";
+                    $isFollowing = false;
+                    $following = $service->getFollowing( $idFollowing );
+                    foreach( $following as $follow){
+                        if( $follow == $person['id_person']){
+                            $isFollowing = true;
+                            break;
+                        } else {
+                            $isFollowing = false;
+                        }
+                    }
                     
-                    $common_books = $service->getCommonBooks( $id['id_person'] , $person['id_person']);
-                    $common_movies = $service->getCommonMovies( $id['id_person'] , $person['id_person']);
+                    $common_books = $service->getCommonBooks( $personFollowing['id_person'] , $person['id_person']);
+                    $common_movies = $service->getCommonMovies( $personFollowing['id_person'] , $person['id_person']);
                     $common_sports;
                     $common_clubs;
                     $common_bands;

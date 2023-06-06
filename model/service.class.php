@@ -870,7 +870,7 @@ class Service
 		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
 		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
 
-        $query = 'MATCH (p1:Person {username: $follows}), (p2:Person {username: $followed}) CREATE (p1)-[:FOLLOWS]->(p2)';
+        $query = 'MATCH (p1:Person {username: $follows}), (p2:Person {username: $followed}) MERGE (p1)-[:FOLLOWS]->(p2)';
         $client->run($query, ['follows' => $follows, 'followed' => $followed]);
 
     }
@@ -900,56 +900,7 @@ class Service
             echo "Dodavanje novog korisnika nije uspjelo.";
         }
     }
-	/*
-	function doIFollowUser( $follows, $followed)
-	{
-		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
-		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
-		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
-
-		$hasResults = false;
-
-		$query = 'MATCH (follower:Person {id_person: $follows})-[f:FOLLOWS]->(followed:Person {id_person: $followed}) RETURN COUNT(*) AS count';
-		$result = $client->run($query, ['follows' => $follows, 'followed' => $followed]);
-
-		foreach ($result as $res) {
-            $node = $res->get('count');
-			$hasResults = true;
-        }
-		return $hasResults;
-	}
-	*/
-
-	function doIFollowUser($follows, $followed)
-	{
-		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
-		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
-		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
-
-		$hasResults = false;
-
-		$query = 'MATCH (p:Person {id_person: $id_follows})-[:FOLLOWS]->(followed:Person) RETURN followed.id_person AS followedId';
-        $results = $client->run($query, ['id_follows' => $follows]);
-
-		foreach ($results as $result) {
-            $node = $result->get('followedId');
-            $param[] = $node;
-            $hasResults = true;
-        }
-
-        if (!$hasResults) {
-            return false;
-        } else {
-            foreach($param as $p){
-				if( $p == $followed){
-					return true;
-				}
-			}
-			return false;
-        }
-
-	}
-
+	
 	function updateUserName( $username , $name )
 	{
 		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';

@@ -33,6 +33,21 @@ if( $person['gender'] === 'female'){
     echo "city: " . $person['city'];
     echo '<br>';
     echo "region: " . $person['region'];
+    if( $isFollowing ){
+        ?>
+        <form action="index.php?rt=follow/unfollow" method="post">
+            <button class = "red" type="submit" name="unfollow" value="<?php echo $person['username']; ?>">Unfollow</button>
+        </form>
+        <br>
+        <?php
+    } else {
+        ?>
+        <form action="index.php?rt=follow/follow" method="post">
+            <button type="submit" name="follow" value="<?php echo $person['username']; ?>">Follow</button>
+        </form>
+        <br>
+        <?php
+    }
  ?>
 
 
