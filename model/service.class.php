@@ -7,6 +7,7 @@ require_once 'person.class.php';
 require_once 'book.class.php';
 require_once 'movie.class.php';
 require_once 'sport.class.php';
+require_once 'club.class.php';
 
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
@@ -235,6 +236,41 @@ class Service
 
 	//SPORT---------------------------------------------------------------------------------------------------------------------------
 	//funkcija koja vra�a sve ponu�ene sportove
+
+	function getSportByType( $type )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM sport WHERE type = :type');
+			$st->execute( array( 'type' => $type ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Sport( $row['id_sport'], $row['type']);
+	}
+
+	function getSportById( $id )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM sport WHERE id_sport = :id');
+			$st->execute( array( 'id' => $id ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Sport( $row['id_sport'], $row['type']);
+	}
+
 	function getAllSports()
 	{
 		try
@@ -308,7 +344,7 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'DELETE FROM like_sport WHERE id_person = :id_person AND id_book = :id_sport' );
+			$st = $db->prepare( 'DELETE FROM like_sport WHERE id_person = :id_person AND id_sport = :id_sport' );
 			$st->execute( array('id_person' => $id_person, 'id_sport' => $id_sport) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
@@ -325,8 +361,108 @@ class Service
         return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
 		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
-/*
+
 	//CLUB----------------------------------------------------------------------------------------------------------------
+
+	function getClubByName( $name )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM club WHERE name = :name');
+			$st->execute( array( 'name' => $name ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Club( $row['id_club'], $row['name'], $row['city'], $row['country'], $row['id_sporta'] );
+	}
+
+
+
+	//funkcija koja vraca sve ponudjene knjige
+	function getAllClubs()
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM club ORDER BY name');
+			$st->execute();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		while( $row = $st->fetch() )
+		{
+			$arr[] = new Club( $row['id_club'], $row['name'], $row['city'], $row['country'], $row['id_sporta'] );
+		}
+
+		return $arr;
+	}
+
+
+	function likeClub($id_person, $id_club)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'INSERT INTO like_club (id_person, id_club) VALUES (:id_person, :id_club)' );
+			$st->execute( array('id_person' => $id_person, 'id_club' => $id_club) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+	}
+
+	// funkcija za svaku osobu vra�a knjige koje se osobi svi�aju
+	function getLikedClubs($id_person)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT c.id_club, c.name, c.city, c.country, c.id_sporta
+                        FROM club c
+                        JOIN like_club lc ON c.id_club = lc.id_club
+                        WHERE lc.id_person = :id_person;');
+			$st->execute( array( 'id_person' => $id_person ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		while( $row = $st->fetch() )
+		{
+			$arr[] = new Club( $row['id_club'], $row['name'], $row['city'], $row['country'], $row['id_sporta'] );
+		}
+
+		return $arr;
+	}
+
+
+
+	function unlikeClub( $id_person, $id_club)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'DELETE FROM like_club WHERE id_person = :id_person AND id_club = :id_club' );
+			$st->execute( array('id_person' => $id_person, 'id_club' => $id_club) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function doILikeClub( $id_person, $id_club)
+	{
+		try
+		{
+			$db = DB::getConnection();
+        	$st = $db->prepare('SELECT EXISTS(SELECT 1 FROM like_club WHERE id_person = :id_person AND id_club = :id_club)');
+        	$st->execute(array('id_person' => $id_person, 'id_club' => $id_club));
+
+        return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
+		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
 
 	// funkcija za dodavanje kluba u database club
 	public function addClub ($name, $city, $country, $id_sporta) {
@@ -334,7 +470,7 @@ class Service
 
 		try{
 			$st = $db->prepare("INSERT INTO club (name, city, country, id_sporta) VALUES(:name, :city, :country, :id_sporta)");
-			$st->execute ();
+			$st->execute (array('name' => $name, 'city' => $city, 'country' => $country, 'id_sporta' => $id_sporta));
 		}
 		catch( PDOException $e ){
 			echo 'Greska u Service.class.php!';
@@ -343,7 +479,7 @@ class Service
 
 	}
 
-	//BAND-----------------------------------------------------------------------------------------------------------------
+/*	//BAND-----------------------------------------------------------------------------------------------------------------
 
 	function getAllBands()
 	{
