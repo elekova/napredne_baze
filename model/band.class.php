@@ -1,9 +1,9 @@
 <?php
 
-class Club
+class Band
 {
     protected $id_band, $name, $country, $genre;
-    
+
     function __construct($id_band, $name, $country, $genre)
     {
         $this->id_band = $id_band;

@@ -27,19 +27,23 @@ for( $i = 0; $i < count($all_books); ++$i ){
    if( $all_books_like[$i] == true ){
       ?>
       <form action="index.php?rt=book/unlike" method="post">
+<<<<<<< HEAD
          <button class = "red" type="submit" name="unlike" value="<?php echo $b->id_book; ?>">Unlike</button>
+=======
+         <button type="submit" name="unlike" value="<?php echo $all_books[$i]->id_book; ?>">Unlike</button>
+>>>>>>> 29746755ff26413d207d8b5a34a6f1d6a78455d3
       </form>
       <br>
       <?php
    } else{
       ?>
    <form action="index.php?rt=book/like" method="post">
-      <button type="submit" name="like" value="<?php echo $b->id_book; ?>">Like</button>
+      <button type="submit" name="like" value="<?php echo $all_books[$i]->id_book; ?>">Like</button>
    </form>
    <br>
    <?php
    }
-   
+
 }
 
 ?>
@@ -48,7 +52,7 @@ for( $i = 0; $i < count($all_books); ++$i ){
 
    <form action="index.php?rt=book/insert" method="post">
       <h3>Add new book</h3>
-      
+
       <input type="text" name="title" required placeholder="enter book title">
       <input type="text" name="author" required placeholder="enter author">
       <input type="text" name="year" required placeholder="enter year">

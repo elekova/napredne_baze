@@ -24,12 +24,12 @@ class FollowController
         $id = strval($id_);
         $usersList = [];
         $following = $service->getFollowing($id);
-        
+
         foreach ($following as $user) {
             $user = $service->getPersonById($user);
             $usersList[$user['id_person']] = $user;
         }
-        
+
 		require_once __DIR__ . '/../view/following_index.php';
 	}
 

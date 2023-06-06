@@ -2,12 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\database",
     "\\controller",
     "\\CSS",
     "\\model",
     "\\proba_login",
-    "\\view"
+    "\\view",
+    "\\view\\css"
   ],
-  "SelectedNode": "\\controller\\personController.php",
+  "SelectedNode": "\\view\\book_index.php",
   "PreviewInSolutionExplorer": false
 }
