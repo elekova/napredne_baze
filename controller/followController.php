@@ -48,12 +48,18 @@ class FollowController
         $id = strval($id_);
         $usersList = [];
         $followed_users = [];
-        $following = $service->getFollowers($id);
+        $followers = $service->getFollowers( $id );
 
-        foreach ($following as $user) {
-            $user = $service->getPersonById($user);
-            $usersList[$user['id_person']] = $user;
-            $followed_users[$user['id_person']] = $service->doIFollowUser( $currentUser , $user['username']);
+        foreach ($followers as $user) {
+            $user = $service->getPersonById( $user );
+            $usersList[ $user['id_person'] ] = $user;
+            $followsCurrentUser = $service->doIFollowUser($currentUser, $user['username']);
+
+            if ($followsCurrentUser) {
+                $followed_users[$user['id_person']] = true; // Prati korisnika
+            } else {
+                $followed_users[$user['id_person']] = false; // Ne prati korisnika
+            }
         }
 
 		require_once __DIR__ . '/../view/followers_index.php';

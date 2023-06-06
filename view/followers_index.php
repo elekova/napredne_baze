@@ -26,8 +26,14 @@ foreach ($usersList as $temp) {
             echo $key . ': ' . $value . '<br>';
         }
     }
+    //echo 'trenutacni user: ' . $temp['username'] . '<br>' ;
+    //echo 'Vrijednost of polja followed_user na id_person'.$followed_users[ $temp['id_person']]. '<br>';
     $service = new Service();
-    if( $service->doIFollowUser( $currentUser, $temp['username']) === true ){
+    echo 'Vrijednost od service->doIfollowuser ' . $service->doIFollowUser( $currentUser, $temp['username']);
+    if( $followed_users[$temp['id_person']] ){
+        echo 'if' . '<br>';
+        echo '<br>' . 'Slijedim li usera';
+        echo $service->doIFollowUser( $currentUser, $temp['username']);
         ?>
         <form action="index.php?rt=follow/unfollow" method="post">
             <button class = "red" type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
@@ -35,6 +41,7 @@ foreach ($usersList as $temp) {
         <br>
         <?php
     } else {
+        echo 'elseif' . '<br>';
         ?>
         <form action="index.php?rt=follow/follow" method="post">
             <button type="submit" name="follow" value="<?php echo $temp['username']; ?>">Follow</button>

@@ -47,17 +47,15 @@ class Service
 			$st->execute( array( 'username' => $username ) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
 		$row = $st->fetch();
+		if( $row === false )
+			return null;
 		$param = array ('id_person' => $row['id_person'], 'username' => $row['username'],
 			'password' => $row['password'], 'name' => $row['name'], 'surname' => $row['surname'],
 			'email' => $row['email'], 'gender' => $row['gender'], 'city' => $row['city'] ,
 			'region' => $row['region'], 'date_of_birth' => $row['date_of_birth']);
 
-		if( $row === false )
-			return null;
-		else
-			return $param;
+		return $param;
 	}
 
 	function updateName($username, $name)
@@ -128,7 +126,7 @@ class Service
 
 	//MYCREW-----------------------------------------------------------------------------------------------------------------
 	//BOOK-------------------------------------------------------------------------------------------------------------------
-	function getBookByName( $name )
+	public function getBookByName( $name )
 	{
 		try
 		{
@@ -234,6 +232,50 @@ class Service
 
         return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
 		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function getCommonBooks( $id1, $id2)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT b.title 
+								FROM like_book AS lb1 
+								JOIN like_book AS lb2 ON lb1.id_book = lb2.id_book 
+								JOIN book AS b ON lb1.id_book = b.id_book 
+								WHERE lb1.id_person = :id1 AND lb2.id_person = :id2' );
+			$st->execute( array('id1' => $id1, 'id2' => $id2) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getBookByName($row['title']);
+		}
+		return $arr;
+		
+	}
+
+	function getSearchedBooks( $title, $author)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT * FROM book WHERE title LIKE :title OR author LIKE :author' );
+            $st->execute(array( 'title' => '%' . $title . '%', 'author' => '%' . $author . '%' ));
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getBookByName($row['title']);
+		}
+		return $arr;
+		
 	}
 
 	//SPORT---------------------------------------------------------------------------------------------------------------------------
@@ -592,6 +634,23 @@ class Service
 		return $arr;
 	}
 
+	public function getMovieByName( $name )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM movie WHERE title = :name');
+			$st->execute( array( 'name' => $name ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Movie( $row['id_movie'], $row['title'], $row['director'], $row['year'], $row['genre'] );
+	}
+
 	function likeMovie($id_person, $id_movie)
 	{
 		try
@@ -655,6 +714,31 @@ class Service
 
         return $st->fetchColumn() > 0; // Vraca true ako postoji redak, inace false
 		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+	}
+
+	function getCommonMovies( $id1, $id2)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT m.title 
+								FROM like_movie AS lm1 
+								JOIN like_movie AS lm2 ON lm1.id_movie = lm2.id_movie
+								JOIN movie AS m ON lm1.id_movie = m.id_movie
+								WHERE lm1.id_person = :id1 AND lm2.id_person = :id2' );
+			$st->execute( array('id1' => $id1, 'id2' => $id2) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		
+		
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getMovieByName($row['title']);
+		}
+		return $arr;
+		
 	}
 
 	//USER----------------------------------------------------------------------------------------------------------------
@@ -816,7 +900,7 @@ class Service
             echo "Dodavanje novog korisnika nije uspjelo.";
         }
     }
-
+	/*
 	function doIFollowUser( $follows, $followed)
 	{
 		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
@@ -833,6 +917,37 @@ class Service
 			$hasResults = true;
         }
 		return $hasResults;
+	}
+	*/
+
+	function doIFollowUser($follows, $followed)
+	{
+		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
+		$auth = Authenticate::basic('neo4j', 'gIF97J_pKsT9Nj_Vmm5fMNEI1x1TAUogZut-4j53v5A');
+		$client = ClientBuilder::create()->withDriver('neo4j', $url, $auth)->build();
+
+		$hasResults = false;
+
+		$query = 'MATCH (p:Person {id_person: $id_follows})-[:FOLLOWS]->(followed:Person) RETURN followed.id_person AS followedId';
+        $results = $client->run($query, ['id_follows' => $follows]);
+
+		foreach ($results as $result) {
+            $node = $result->get('followedId');
+            $param[] = $node;
+            $hasResults = true;
+        }
+
+        if (!$hasResults) {
+            return false;
+        } else {
+            foreach($param as $p){
+				if( $p == $followed){
+					return true;
+				}
+			}
+			return false;
+        }
+
 	}
 
 };
