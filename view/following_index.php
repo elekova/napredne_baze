@@ -20,10 +20,17 @@ foreach ($usersList as $temp) {
         <?php
     }
     foreach ($temp as $key => $value) {
-        if( $key != 'password'){
+        if( $key !=='password' && $key !=='id_person'){
             echo $key . ': ' . $value . '<br>';
         }
+        
     }
+    ?>
+    <form action="index.php?rt=follow/unfollow" method="post">
+        <button type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
+    </form>
+    <br>
+    <?php
 }
 ?>
 
