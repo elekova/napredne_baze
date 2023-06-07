@@ -50,7 +50,10 @@ if( $person['gender'] === 'female'){
 <table>
     <?php
     if (!empty($common_books)){ ?>
-        <h2>Common books:</h2>
+        <h2>
+		<img src="view/book.jpg" alt="icon" class=icon />
+		 Common books
+        </h2>
         <tr>
             <th>Title</th>
 		    <th>Author</th>
@@ -72,7 +75,10 @@ if( $person['gender'] === 'female'){
 <table>
         <?php
         if (!empty($common_movies)){ ?>
-            <h2>Common movies:</h2>
+            <h2>
+		    <img src="view/movie.png" alt="icon" class=icon />
+		    Common movies
+            </h2>
             <tr>
             <th>Title</th>
 		    <th>Director</th>
@@ -97,7 +103,10 @@ if( $person['gender'] === 'female'){
 <table> 
     <?php
     if (!empty($common_sports)) { ?>
-        <h2>Common sports:</h2>
+        <h2>
+		<img src="view/sport.png" alt="icon" class=icon />
+		 Common sports
+        </h2>
         <tr>
             <th>Type</th>
         </tr>
@@ -116,7 +125,10 @@ if( $person['gender'] === 'female'){
  <table>
     <?php
 if (!empty($common_clubs)) { ?>
-    <h2>Common clubs:</h2>
+    <h2>
+		<img src="view/club2.png" alt="icon" class=icon />
+		 Common clubs
+    </h2>
      <tr>
             <th>Name</th>
 		    <th>City</th>
@@ -143,7 +155,10 @@ if (!empty($common_clubs)) { ?>
 <table>
     <?php
     if (!empty($common_bands)) { ?>
-        <h2>Common bands:</h2>
+       <h2>
+		    <img src="view/band.jpg" alt="icon" class=icon />
+		    Common bands
+        </h2>
          <tr>
             <th>Name</th>
 		    <th>Country</th>

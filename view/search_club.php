@@ -1,6 +1,9 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Searched club:</h2>
+<h2>
+		<img src="view/club2.png" alt="icon" class=icon />
+		Searched club
+</h2>
 <table>
         <tr>
             <td>Name</td>

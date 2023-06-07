@@ -1,6 +1,10 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Searched band:</h2>
+
+<h2>
+		<img src="view/band.jpg" alt="icon" class=icon />
+		Searched band
+</h2>
 <table>
      <tr>
             <td>Name</td>

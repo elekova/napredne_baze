@@ -1,6 +1,9 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Searched book:</h2>
+<h2>
+		<img src="view/book.jpg" alt="icon" class=icon />
+		Searched book
+</h2>
 <table>
     <tr>
             <th>Title</th>

@@ -1,6 +1,9 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Searched movie</h2>
+<h2>
+		<img src="view/movie.png" alt="icon" class=icon />
+		Searched movie
+</h2>
 <table>
         <tr>
             <td>Title</td>
