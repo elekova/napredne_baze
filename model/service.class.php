@@ -586,6 +586,31 @@ class Service
 
 	}
 
+	function getCommonClubs( $id1, $id2)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT c.name
+								FROM like_club AS lc1
+								JOIN like_club AS lc2 ON lc1.id_club = lc2.id_club
+								JOIN club AS c ON lc1.id_club = c.id_club
+								WHERE lc1.id_person = :id1 AND lc2.id_person = :id2' );
+			$st->execute( array('id1' => $id1, 'id2' => $id2) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+
+
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getClubByName($row['name']);
+		}
+		return $arr;
+
+	}
+
 //CLUB----------------------------------------------------------------------------------------------------------------------
 //BAND-----------------------------------------------------------------------------------------------------------------
 
