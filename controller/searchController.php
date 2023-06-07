@@ -113,5 +113,27 @@ class searchController
 
             }
         }
+
+        function band()
+        {
+            if( isset($_SESSION['username']))
+            {
+                $service= new Service();
+                if( (isset($_POST['name']) && $_POST['name'] !== '') && (isset($_POST['country']) && $_POST['country'] !== '') && (isset($_POST['genre']) && $_POST['genre'] !== '')){
+                    $clubs = $service->getSearchedBands($_POST['name'], $_POST['country'], $_POST['genre']);
+
+                    if( empty($bands) ){
+                        $title = "No results!";
+                        require_once __DIR__ . '/../view/no_search_result.php';
+                        exit();
+                    } else{
+                        $title = "Search result!";
+                    
+                        require_once __DIR__ . '/../view/search_band.php';
+                        }
+                    }
+
+            }
+        }
     
 }

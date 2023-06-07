@@ -635,6 +635,42 @@ class Service
 		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
 
+	function getSearchedBands( $name, $country, $genre)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT * FROM band WHERE name LIKE :name OR country LIKE :country OR genre LIKE :genre' );
+            $st->execute(array( 'name' => '%' . $name . '%', 'country' => '%' . $country . '%', 'genre' => '%' . $genre . '%' ));
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getBandByName($row['name']);
+		}
+		return $arr;
+	}
+	 
+	function getBandByName( $name )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM band WHERE name = :name');
+			$st->execute( array( 'name' => $name ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Band( $row['id_band'], $row['name'], $row['country'], $row['genre'] );
+	}
+
 	//MOVIES------------------------------------------------------------------------------------------------------------------
 
 	function getAllMovies()

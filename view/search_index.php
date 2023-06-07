@@ -16,7 +16,7 @@
 </form>
 
 <form action="index.php?rt=search/book" method="post">
-      <p>Search book by title or author</p>
+      <p>Search book by title and author</p>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -32,7 +32,7 @@
 </form>
 
 <form action="index.php?rt=search/movie" method="post">
-      <p>Search movie by title</p>
+      <p>Search movie</p>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -79,7 +79,7 @@
 </form>
 
 <form action="index.php?rt=search/band" method="post">
-      <p>Search band by name</p>
+      <p>Search band</p>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -88,6 +88,8 @@
      };
       ?>
       <input type="text" name="name" required placeholder="enter name">
+      <input type="text" name="country" required placeholder="enter country">
+      <input type="text" name="genre" required placeholder="enter genre">
       <br></br>
       <button type="submit" name="search_band" value="search_band">Search band!</button>
       <br></br>
