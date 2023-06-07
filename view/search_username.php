@@ -1,5 +1,6 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 <?php require_once __DIR__ . '/../app/database/db.class.php'; ?>
+<?php require_once __DIR__ . '/../model/service.class.php';?>
 
 
 <?php
@@ -72,8 +73,33 @@ if( $person['gender'] === 'female'){
             }
         ?>
     <h2>Sports:</h2>
+    <?php
+        foreach( $common_sports as $sport){
+            echo $sport->type . '<br>';
+            echo '<br>';
+        }
+    ?>
     <h2>Clubs:</h2>
+    <?php
+        foreach( $common_clubs as $club){
+            echo $club->name . '<br>';
+            echo $club->city . '<br>';
+            $service = new Service();
+            $sport = $service->getSportById($club->id_sport);
+            echo $sport->type;
+            echo '<br>';
+        }
+    ?>
+
     <h2>Bands:</h2>
+    <?php
+        foreach( $common_bands as $band){
+            echo $band->name . '<br>';
+            echo $band->country . '<br>';
+            echo $band->genre . '<br>';
+            echo '<br>';
+        }
+    ?>
 
 
 

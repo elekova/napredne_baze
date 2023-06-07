@@ -14,7 +14,7 @@
 
 		function loginCheck(){
 
-			if(isset($_SESSION['id_user'])){
+			if(isset($_SESSION['username'])){
 				//echo 'Ovo je prelose';
 				header('Location: index.php?rt=mycrew');
 				return;

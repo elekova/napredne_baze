@@ -36,13 +36,13 @@ class searchController
                             $isFollowing = false;
                         }
                     }
-                    
+
                     $common_books = $service->getCommonBooks( $personFollowing['id_person'] , $person['id_person']);
                     $common_movies = $service->getCommonMovies( $personFollowing['id_person'] , $person['id_person']);
-                    $common_sports;
-                    $common_clubs;
-                    $common_bands;
-                
+                    $common_sports = $service->getCommonSports ($personFollowing['id_person'] , $person['id_person']);
+                    $common_clubs = $service->getCommonClubs ($personFollowing['id_person'] , $person['id_person']);
+                    $common_bands = $service->getCommonBands ($personFollowing['id_person'] , $person['id_person']);
+
                     require_once __DIR__ . '/../view/search_username.php';
                 }
 			}
@@ -50,7 +50,7 @@ class searchController
 			if( isset($_POST['name']) && $_POST['name'] !== ''){
 				$service->updateName($_SESSION['username'], $_POST['name']);
 			}
-            
+
 			if( isset($_POST['surname']) && $_POST['surname'] !== ''){
 				$service->updateSurname($_SESSION['username'], $_POST['surname']);
 			}
@@ -84,12 +84,12 @@ class searchController
                         exit();
                     } else{
                         $title = "Search result!";
-                    
+
                         require_once __DIR__ . '/../view/search_books.php';
                         }
                     }
 
             }
         }
-    
+
 }
