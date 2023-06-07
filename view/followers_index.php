@@ -26,8 +26,8 @@ foreach ($usersList as $temp) {
             echo $key . ': ' . $value . '<br>';
         }
     }
-    $service = new Service();
-    if( $service->doIFollowUser( $currentUser, $temp['username']) === true ){
+   
+    if( !empty($followed_users) && $followed_users[ $temp['id_person'] ]){
         ?>
         <form action="index.php?rt=follow/unfollow" method="post">
             <button class = "red" type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
