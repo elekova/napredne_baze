@@ -32,13 +32,20 @@ class ClubController
 		    if( isset($_POST['name']) && $_POST['name'] !== '' && isset($_POST['city'])
             && $_POST['city'] !== '' && isset($_POST['country']) && $_POST['country'] !== ''
             && isset($_POST['sport']) && $_POST['sport'] !== ''){
-                $id_sporta = $service->getSportByType($_POST['sport']);
-				$service->addClub($_POST['name'], $_POST['city'], $_POST['country'],  $id_sporta->id_sport);
+                if($id_sporta = $service->getSportByType($_POST['sport']) !== null){
+                    $service->addClub($_POST['name'], $_POST['city'], $_POST['country'],  $id_sporta->id_sport);
+
+                    $title = 'Added successfully!';
+            		require_once __DIR__ . '/../view/uspjesno_dodano.php';
+                }
+                else{
+                    $title = 'Something went wrong!';
+            		require_once __DIR__ . '/../view/error_index.php';
+                }
+
 			}
 
 		}
-        $title = 'Added successfully!';
-		require_once __DIR__ . '/../view/uspjesno_dodano.php';
 
     }
 
