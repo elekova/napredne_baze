@@ -62,7 +62,7 @@
 </form>
 
 <form action="index.php?rt=search/club" method="post">
-      <p>Search club by name</p>
+      <p>Search club</p>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -71,6 +71,8 @@
      };
       ?>
       <input type="text" name="name" required placeholder="enter name">
+      <input type="text" name="city" required placeholder="enter city">
+      <input type="text" name="country" required placeholder="enter country">
       <br></br>
       <button type="submit" name="search_club" value="search_club">Search club!</button>
       <br></br>
