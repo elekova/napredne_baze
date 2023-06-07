@@ -97,17 +97,18 @@ class searchController
             if( isset($_SESSION['username']))
             {
                 $service= new Service();
-                if( (isset($_POST['title']) && $_POST['title'] !== '') && (isset($_POST['author']) && $_POST['author'] !== '')){
-                    $books = $service->getSearchedMovies($_POST['title'], $_POST['director'], $_POST['year'], $_POST['genre']);
+                if( (isset($_POST['title']) && $_POST['title'] !== '') && (isset($_POST['director']) && $_POST['director'] !== '') &&
+                (isset($_POST['year']) && $_POST['year'] !== '') && (isset($_POST['genre']) && $_POST['genre'] !== '')){
+                    $movies = $service->getSearchedMovies($_POST['title'], $_POST['director'], $_POST['year'], $_POST['genre']);
 
-                    if( empty($books) ){
+                    if( empty($movies) ){
                         $title = "No results!";
                         require_once __DIR__ . '/../view/no_search_result.php';
                         exit();
                     } else{
                         $title = "Search result!";
 
-                        require_once __DIR__ . '/../view/search_books.php';
+                        require_once __DIR__ . '/../view/search_movies.php';
                         }
                     }
 
