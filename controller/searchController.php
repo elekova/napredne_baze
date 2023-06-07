@@ -115,6 +115,28 @@ class searchController
             }
         }
 
+        function sport()
+        {
+            if( isset($_SESSION['username']))
+            {
+                $service= new Service();
+                if( (isset($_POST['type']) && $_POST['type'] !== '') ){
+                    $sport_clubs = $service->getSearchedSports($_POST['type']);
+
+                    if( empty($sport_clubs) ){
+                        $title = "No results!";
+                        require_once __DIR__ . '/../view/no_search_result.php';
+                        exit();
+                    } else{
+                        $title = "Search result!";
+
+                        require_once __DIR__ . '/../view/search_sport.php';
+                        }
+                    }
+
+            }
+        }
+
         function club()
         {
             if( isset($_SESSION['username']))

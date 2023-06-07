@@ -449,6 +449,30 @@ class Service
 
 	}
 
+	function getSearchedSports( $type)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			//join
+			$st = $db->prepare( 'SELECT c.name
+								FROM club c
+								JOIN sport s ON c.id_sporta = s.id_sport
+								WHERE s.type LIKE :type' );
+            $st->execute(array( 'type' => '%' . $type . '%'));
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getClubByName($row['name']);
+		}
+		return $arr;
+
+	}
+
 	//CLUB----------------------------------------------------------------------------------------------------------------
 
 	function getClubByName( $name )
