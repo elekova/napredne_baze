@@ -5,7 +5,7 @@ require_once 'db.class.php';
 
 $db = DB::getConnection();
 
-/*$has_tables = false;
+$has_tables = false;
 
 try
 {
@@ -47,7 +47,7 @@ if( $has_tables )
 {
 	exit( 'Tablice person_nova / book / movie / sport / club / band već postoje. Obrišite ih pa probajte ponovno.' );
 }
-*/
+
 
 
 try
