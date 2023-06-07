@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 <?php require_once __DIR__ . '/../model/service.class.php'; ?>
 
-<p>Current user: <?php echo $currentUser; ?> followers:<p>
+<h2>Current user: <?php echo $currentUser; ?> is followed by:</h2>
 <br>
 
 <?php
@@ -20,7 +20,7 @@ foreach ($usersList as $temp) {
         <img src="view/male.jpg" class = gender alt="Gender: male">
         <br>
         <?php
-    }
+    }    
     foreach ($temp as $key => $value) {
         if( $key != 'password' && $key !=='id_person'){
             echo $key . ': ' . $value . '<br>';

@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<p>Current user: <?php echo $currentUser; ?> is following:<p>
+<h2>Current user: <?php echo $currentUser; ?> is following:</h2>
 <br>
 
 <?php
