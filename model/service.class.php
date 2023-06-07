@@ -239,23 +239,23 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT b.title 
-								FROM like_book AS lb1 
-								JOIN like_book AS lb2 ON lb1.id_book = lb2.id_book 
-								JOIN book AS b ON lb1.id_book = b.id_book 
+			$st = $db->prepare( 'SELECT b.title
+								FROM like_book AS lb1
+								JOIN like_book AS lb2 ON lb1.id_book = lb2.id_book
+								JOIN book AS b ON lb1.id_book = b.id_book
 								WHERE lb1.id_person = :id1 AND lb2.id_person = :id2' );
 			$st->execute( array('id1' => $id1, 'id2' => $id2) );
 		}
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
-		
+
 		while( $row = $st->fetch() )
 		{
 			$arr[] = $this->getBookByName($row['title']);
 		}
 		return $arr;
-		
+
 	}
 
 	function getSearchedBooks( $title, $author)
@@ -269,13 +269,13 @@ class Service
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
-		
+
 		while( $row = $st->fetch() )
 		{
 			$arr[] = $this->getBookByName($row['title']);
 		}
 		return $arr;
-		
+
 	}
 
 	//SPORT---------------------------------------------------------------------------------------------------------------------------
@@ -407,6 +407,48 @@ class Service
 		} catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 	}
 
+	function getSportsByType( $type )
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare('SELECT * FROM sport WHERE type = :type');
+			$st->execute( array( 'type' => $type ) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$row = $st->fetch();
+		if( $row === false )
+			return null;
+		else
+			return new Sport( $row['id_sport'], $row['type'] );
+	}
+
+	function getCommonSports( $id1, $id2)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT s.type
+								FROM like_sport AS ls1
+								JOIN like_sport AS ls2 ON ls1.id_sport = ls2.id_sport
+								JOIN sport AS s ON ls1.id_sport = s.id_sport
+								WHERE ls1.id_person = :id1 AND ls2.id_person = :id2' );
+			$st->execute( array('id1' => $id1, 'id2' => $id2) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+
+
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getSportByType($row['type']);
+		}
+		return $arr;
+
+	}
+
 	//CLUB----------------------------------------------------------------------------------------------------------------
 
 	function getClubByName( $name )
@@ -535,13 +577,38 @@ class Service
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
-		
+
 		while( $row = $st->fetch() )
 		{
 			$arr[] = $this->getClubByName($row['name']);
 		}
 		return $arr;
-		
+
+	}
+
+	function getCommonClubs( $id1, $id2)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT c.name
+								FROM like_club AS lc1
+								JOIN like_club AS lc2 ON lc1.id_club = lc2.id_club
+								JOIN club AS c ON lc1.id_club = c.id_club
+								WHERE lc1.id_person = :id1 AND lc2.id_person = :id2' );
+			$st->execute( array('id1' => $id1, 'id2' => $id2) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+
+
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getClubByName($row['name']);
+		}
+		return $arr;
+
 	}
 
 //CLUB----------------------------------------------------------------------------------------------------------------------
@@ -668,7 +735,32 @@ class Service
 		if( $row === false )
 			return null;
 		else
-			return new Band( $row['id_band'], $row['name'], $row['country'], $row['genre'] );
+			return new Band( $row['id_band'], $row['name'] , $row['country'], $row['genre']);
+	}
+
+	function getCommonBands( $id1, $id2)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT b.name
+								FROM like_band AS lb1
+								JOIN like_band AS lb2 ON lb1.id_band = lb2.id_band
+								JOIN band AS b ON lb1.id_band = b.id_band
+								WHERE lb1.id_person = :id1 AND lb2.id_person = :id2' );
+			$st->execute( array('id1' => $id1, 'id2' => $id2) );
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+
+
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getBandByName($row['name']);
+		}
+		return $arr;
+
 	}
 
 	//MOVIES------------------------------------------------------------------------------------------------------------------
@@ -691,7 +783,7 @@ class Service
 		return $arr;
 	}
 
-	public function getMovieByName( $name )
+	function getMovieByName( $name )
 	{
 		try
 		{
@@ -778,8 +870,8 @@ class Service
 		try
 		{
 			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT m.title 
-								FROM like_movie AS lm1 
+			$st = $db->prepare( 'SELECT m.title
+								FROM like_movie AS lm1
 								JOIN like_movie AS lm2 ON lm1.id_movie = lm2.id_movie
 								JOIN movie AS m ON lm1.id_movie = m.id_movie
 								WHERE lm1.id_person = :id1 AND lm2.id_person = :id2' );
@@ -788,14 +880,14 @@ class Service
 		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 
 		$arr = array();
-		
-		
+
+
 		while( $row = $st->fetch() )
 		{
 			$arr[] = $this->getMovieByName($row['title']);
 		}
 		return $arr;
-		
+
 	}
 
 	//USER----------------------------------------------------------------------------------------------------------------
@@ -957,7 +1049,7 @@ class Service
             echo "Dodavanje novog korisnika nije uspjelo.";
         }
     }
-	
+
 	function updateUserName( $username , $name )
 	{
 		$url = 'neo4j+s://d9646c66.databases.neo4j.io:7687';
