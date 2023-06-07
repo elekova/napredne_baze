@@ -92,6 +92,28 @@ class searchController
             }
         }
 
+        function movie()
+        {
+            if( isset($_SESSION['username']))
+            {
+                $service= new Service();
+                if( (isset($_POST['title']) && $_POST['title'] !== '') && (isset($_POST['author']) && $_POST['author'] !== '')){
+                    $books = $service->getSearchedMovies($_POST['title'], $_POST['director'], $_POST['year'], $_POST['genre']);
+
+                    if( empty($books) ){
+                        $title = "No results!";
+                        require_once __DIR__ . '/../view/no_search_result.php';
+                        exit();
+                    } else{
+                        $title = "Search result!";
+
+                        require_once __DIR__ . '/../view/search_books.php';
+                        }
+                    }
+
+            }
+        }
+
         function club()
         {
             if( isset($_SESSION['username']))
