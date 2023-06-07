@@ -34,7 +34,7 @@ foreach ($usersList as $temp) {
     </ul>
 
    
-    <?phpif( !empty($followed_users) && $followed_users[ $temp['id_person'] ]){
+    <?php if( !empty($followed_users) && $followed_users[ $temp['id_person'] ]){
         ?>
         <form action="index.php?rt=follow/unfollow" method="post">
             <button class = "red" type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
