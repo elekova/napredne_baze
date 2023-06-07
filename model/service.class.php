@@ -523,6 +523,27 @@ class Service
 		}
 
 	}
+
+	function getSearchedClubs( $name, $city, $country)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT * FROM club WHERE name LIKE :name OR city LIKE :city OR country LIKE :country' );
+            $st->execute(array( 'name' => '%' . $name . '%', 'city' => '%' . $city . '%', 'country' => '%' . $country . '%' ));
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getClubByName($row['name']);
+		}
+		return $arr;
+		
+	}
+
 //CLUB----------------------------------------------------------------------------------------------------------------------
 //BAND-----------------------------------------------------------------------------------------------------------------
 

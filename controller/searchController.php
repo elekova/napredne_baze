@@ -91,5 +91,27 @@ class searchController
 
             }
         }
+
+        function club()
+        {
+            if( isset($_SESSION['username']))
+            {
+                $service= new Service();
+                if( (isset($_POST['name']) && $_POST['name'] !== '') && (isset($_POST['city']) && $_POST['city'] !== '') && (isset($_POST['country']) && $_POST['country'] !== '')){
+                    $clubs = $service->getSearchedClubs($_POST['name'], $_POST['city'], $_POST['country']);
+
+                    if( empty($clubs) ){
+                        $title = "No results!";
+                        require_once __DIR__ . '/../view/no_search_result.php';
+                        exit();
+                    } else{
+                        $title = "Search result!";
+                    
+                        require_once __DIR__ . '/../view/search_club.php';
+                        }
+                    }
+
+            }
+        }
     
 }
