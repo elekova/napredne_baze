@@ -16,25 +16,17 @@ if( $person['gender'] === 'female'){
     <?php
 }
 ?>
-
- <?php
-    echo '<br>';
-    echo "username: " . $person['username'];
-    echo '<br>';
-    echo "name: " . $person['name'];
-    echo '<br>';
-    echo "surname: " . $person['surname'];
-    echo '<br>';
-    echo "date od birth: " . $person['date_of_birth'];
-    echo '<br>';
-    echo "gender: " . $person['gender'];
-    echo '<br>';
-    echo "email: " . $person['email'];
-    echo '<br>';
-    echo "city: " . $person['city'];
-    echo '<br>';
-    echo "region: " . $person['region'];
-    if( $isFollowing ){
+   <ul>
+    <li>username: <?php echo $person['username']; ?></li>
+    <li>name: <?php echo $person['name']; ?></li>
+   <li>surname: <?php echo $person['surname']; ?></li>
+    <li>date of birth: <?php echo $person['date_of_birth']; ?></li>
+    <li>gender: <?php echo $person['gender']; ?></li>
+    <li>email: <?php echo $person['email']; ?></li>
+    <li>city: <?php echo $person['city']; ?></li>
+    <li>region: <?php echo $person['region']; ?></li>
+    </ul>
+    <?php if( $isFollowing ){
         ?>
         <form action="index.php?rt=follow/unfollow" method="post">
             <button class = "red" type="submit" name="unfollow" value="<?php echo $person['username']; ?>">Unfollow</button>
@@ -53,53 +45,124 @@ if( $person['gender'] === 'female'){
 
 
 
-    <h3>Common interests:</h3>
-    <h2>Books:</h2>
-        <?php
-            foreach( $common_books as $book){
-                echo $book->title . '<br>';
-                echo $book->author . '<br>';
-                echo $book->year . '<br>';
-            }
-        ?>
-    <h2>Movies:</h2>
-        <?php
-            foreach( $common_movies as $movie){
-                echo $movie->title . '<br>';
-                echo $movie->director . '<br>';
-                echo $movie->genre . '<br>';
-                echo $movie->year . '<br>';
-                echo '<br>';
-            }
-        ?>
-    <h2>Sports:</h2>
+    <h1>Common interests:</h1>
+
+<table>
     <?php
-        foreach( $common_sports as $sport){
-            echo $sport->type . '<br>';
-            echo '<br>';
+    if (!empty($common_books)){ ?>
+        <h2>Common books:</h2>
+        <tr>
+            <th>Title</th>
+		    <th>Author</th>
+		    <th>Year</th>
+        </tr>
+    <?php foreach ($common_books as $book) {
+    ?>
+        <tr>
+            <td><?php echo $book->title; ?></td>
+            <td><?php echo $book->author; ?></td>
+            <td><?php echo $book->year; ?></td>
+        </tr>
+        <?php
+    }
+    }
+    ?>
+</table>
+
+<table>
+        <?php
+        if (!empty($common_movies)){ ?>
+            <h2>Common movies:</h2>
+            <tr>
+            <th>Title</th>
+		    <th>Director</th>
+		    <th>Genre</th>
+            <th>Year</th>
+            </tr>
+        <?php
+        foreach ($common_movies as $movie) {
+            ?>
+            <tr>
+            <td><?php echo $movie->title; ?></td>
+            <td><?php echo $movie->director; ?></td>
+            <td><?php echo $movie->genre; ?></td>
+            <td><?php echo $movie->year; ?></td>
+            </tr>
+            <?php
+        }
         }
     ?>
-    <h2>Clubs:</h2>
+</table>
+    
+<table> 
     <?php
-        foreach( $common_clubs as $club){
-            echo $club->name . '<br>';
-            echo $club->city . '<br>';
+    if (!empty($common_sports)) { ?>
+        <h2>Common sports:</h2>
+        <tr>
+            <th>Type</th>
+        </tr>
+    <?php
+    foreach ($common_sports as $sport) {
+        ?>
+        <tr>
+            <td><?php echo $sport->type; ?></td>
+        </tr>
+        <?php
+    }
+}
+?>
+</table>
+
+ <table>
+    <?php
+if (!empty($common_clubs)) { ?>
+    <h2>Common clubs:</h2>
+     <tr>
+            <th>Name</th>
+		    <th>City</th>
+      </tr>
+      <?php
+    foreach ($common_clubs as $club) {
+        ?>
+        <tr>
+            <td><?php echo $club->name; ?></td>
+            <td><?php echo $club->city; ?></td>
+            <?php
             $service = new Service();
             $sport = $service->getSportById($club->id_sport);
-            echo $sport->type;
-            echo '<br>';
-        }
-    ?>
+            ?>
+            <td><?php echo $sport->type; ?></td>
+        </tr>
+        <?php
+    }
+}
+?>
+</table>
 
-    <h2>Bands:</h2>
+
+<table>
     <?php
-        foreach( $common_bands as $band){
-            echo $band->name . '<br>';
-            echo $band->country . '<br>';
-            echo $band->genre . '<br>';
-            echo '<br>';
+    if (!empty($common_bands)) { ?>
+        <h2>Common bands:</h2>
+         <tr>
+            <th>Name</th>
+		    <th>Country</th>
+            <th>Genre</th>
+      </tr>
+      <?php
+        foreach ($common_bands as $band) {
+            ?>
+            <tr>
+                <td><?php echo $band->name; ?></td>
+                <td><?php echo $band->country; ?></td>
+                <td><?php echo $band->genre; ?></td>
+            </tr>
+            <?php
         }
+    }
     ?>
+</table>
+
 
 
 

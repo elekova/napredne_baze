@@ -7,9 +7,8 @@
     "\\CSS",
     "\\model",
     "\\proba_login",
-    "\\view",
-    "\\view\\css"
+    "\\view"
   ],
-  "SelectedNode": "\\view\\book_index.php",
+  "SelectedNode": "\\view\\followers_index.php",
   "PreviewInSolutionExplorer": false
 }

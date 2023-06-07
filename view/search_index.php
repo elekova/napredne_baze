@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
 <form action="index.php?rt=search/username" method="post">
-      <p>Search user by username</p>
+      <h2>Search user by username</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -16,7 +16,7 @@
 </form>
 
 <form action="index.php?rt=search/book" method="post">
-      <p>Search book by title and author</p>
+      <h2>Search book by title and author</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -32,7 +32,7 @@
 </form>
 
 <form action="index.php?rt=search/movie" method="post">
-      <p>Search movie</p>
+      <h2>Search movie</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -50,7 +50,7 @@
 </form>
 
 <form action="index.php?rt=search/sport" method="post">
-      <p>Search sport by type</p>
+      <h2>Search sport by type</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -65,7 +65,7 @@
 </form>
 
 <form action="index.php?rt=search/club" method="post">
-      <p>Search club</p>
+      <h2>Search club</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -82,7 +82,7 @@
 </form>
 
 <form action="index.php?rt=search/band" method="post">
-      <p>Search band</p>
+      <h2>Search band</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){

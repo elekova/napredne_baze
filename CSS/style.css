@@ -41,31 +41,40 @@ img.gender {
 }
 
 /* stil za navigaciju */
+
+
 nav ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    justify-content: flex-start;
+    /*display: flex;
+    justify-content: flex-start;*/
+    overflow: hidden;
     background-color: rgb(0, 128, 0);
 }
 
-nav ul li {
-    margin-right: 10px;
-}
+    nav ul li {
+        margin-right: 10px;
+        float: left;
+    }
 
-nav ul li a {
-    color: #fff; /* Bijeli tekst */
-    text-decoration: none;
-    padding: 5px;
-    border-radius: 3px;
-}
+        nav ul li a {
+            /*color: #fff;
+            text-decoration: none;
+            padding: 5px;
+            border-radius: 3px;
+            */
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
 
-nav ul li a:hover {
-    background-color: #333;
-    color: #fff;
-}
-
+            nav ul li a:hover {
+                background-color: #333;
+                color: #fff;
+            }
 
 input[type=text], input[type=password] {
     width: 50%;
@@ -145,6 +154,6 @@ table {
 ul {
     list-style: circle inside;
 }
-    ul li {
-        text-align: left;
-    }
+    /*ul li {
+        text-align: justify;
+    }*/

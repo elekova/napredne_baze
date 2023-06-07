@@ -11,6 +11,7 @@
 		<h1><?php echo $title; ?></h1>
 	</div>
 <?php  if(isset($_SESSION['username'])){?>
+
 	<nav>
 		<ul>
 			<li><a href="index.php?rt=mycrew">My Profile</a></li>
@@ -25,4 +26,5 @@
 			<li><a href="index.php?rt=login/out"> Log out </a></li>
 		</ul>
 	</nav>
+
 <?php } else "samo nekaj ispis"?>

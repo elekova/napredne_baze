@@ -20,14 +20,21 @@ foreach ($usersList as $temp) {
         <img src="view/male.jpg" class = gender alt="Gender: male">
         <br>
         <?php
-    }    
+    }?>    
+    <ul>
+    <?php
     foreach ($temp as $key => $value) {
-        if( $key != 'password' && $key !=='id_person'){
-            echo $key . ': ' . $value . '<br>';
+        if ($key != 'password' && $key !== 'id_person') {
+            ?>
+            <li><?php echo $key . ': ' . $value; ?></li>
+            <?php
         }
     }
+    ?>
+    </ul>
+
    
-    if( !empty($followed_users) && $followed_users[ $temp['id_person'] ]){
+    <?phpif( !empty($followed_users) && $followed_users[ $temp['id_person'] ]){
         ?>
         <form action="index.php?rt=follow/unfollow" method="post">
             <button class = "red" type="submit" name="unfollow" value="<?php echo $temp['username']; ?>">Unfollow</button>
