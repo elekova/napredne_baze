@@ -120,7 +120,7 @@ class searchController
             {
                 $service= new Service();
                 if( (isset($_POST['name']) && $_POST['name'] !== '') && (isset($_POST['country']) && $_POST['country'] !== '') && (isset($_POST['genre']) && $_POST['genre'] !== '')){
-                    $clubs = $service->getSearchedBands($_POST['name'], $_POST['country'], $_POST['genre']);
+                    $bands = $service->getSearchedBands($_POST['name'], $_POST['country'], $_POST['genre']);
 
                     if( empty($bands) ){
                         $title = "No results!";
