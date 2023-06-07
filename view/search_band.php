@@ -1,13 +1,20 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<?php
-foreach( $bands as $b ){
-    echo '<br>';
-   echo $b->name . '<br>';
-   echo $b->country . '<br>';
-   echo $b->genre . '<br>';
-   echo '<br>';
-}
-?>
+<h2>Searched band:</h2>
+<table>
+     <tr>
+            <td>Name</td>
+            <td>Country</td>
+            <td>Genre</td>
+     </tr>
+    <?php foreach ($bands as $b) { ?>
+        <tr>
+            <td><?php echo $b->name; ?></td>
+            <td><?php echo $b->country; ?></td>
+            <td><?php echo $b->genre; ?></td>
+        </tr>
+    <?php } ?>
+</table>
+
 
 <?php require_once __DIR__ . '/_footer.php'; ?>

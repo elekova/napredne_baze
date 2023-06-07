@@ -1,6 +1,10 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-    <h2>Liked movies of <?php echo $currentUser; ?></h2>
+<?php if (!empty($liked_movies)) { ?>
+    <h2>
+		<img src="view/movie.png" alt="icon" class=icon />
+		Liked movies of <?php echo $currentUser; ?>
+	</h2>
     <table>
     <tr>
         <th>Title</th>
@@ -23,8 +27,19 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<?php }
+else { ?>
+    <h2>
+		<img src="view/movie.png" alt="icon" class=icon />
+		<?php echo $currentUser; ?> has no liked movie
+	</h2>
+<?php 
+} ?>
 
-<h2>All movies:</h2>
+<h2>
+		<img src="view/movie.png" alt="icon" class=icon />
+		All movies
+</h2>
 <table>
     <tr>
         <th>Title</th>
@@ -58,7 +73,10 @@
 
 <div class="form-container">
     <form action="index.php?rt=movie/insert" method="post">
-    <h3>Add new movie</h3>
+    <h2>
+		<img src="view/movie.png" alt="icon" class=icon />
+		Add new movie
+	</h2>
     <?php
     if (isset($error)) {
         foreach ($error as $error) {

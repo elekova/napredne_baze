@@ -1,6 +1,10 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Liked bands of <?php echo $currentUser; ?>:</h2>
+<?php if (!empty($liked_bands)) { ?>
+<h2>
+    <img src="view/band.jpg" alt="icon" class=icon />
+	Liked bands of <?php echo $currentUser; ?>
+</h2>
 <table>
     <tr>
         <th>Name</th>
@@ -21,8 +25,20 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<?php }
+else { ?>
+   <h2>
+    <img src="view/band.jpg" alt="icon" class=icon />
+	<?php echo $currentUser; ?> has no liked band
+   </h2>
+<?php 
+} ?>
 
-<h2>All bands:</h2>
+
+<h2>
+    <img src="view/band.jpg" alt="icon" class=icon />
+	All bands
+</h2>
 <table>
     <tr>
         <th>Name</th>
@@ -60,7 +76,10 @@
 <div class="form-container">
 
     <form action="index.php?rt=band/insert" method="post">
-        <h3>Add new band</h3>
+    <h2>
+        <img src="view/band.jpg" alt="icon" class=icon />
+	    Add new band
+    </h2>
         <?php
         if (isset($error)) {
             foreach ($error as $error) {

@@ -1,6 +1,10 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-<h2>Liked books of <?php echo $currentUser; ?>:</h2>
+<?php if (!empty($liked_books)) { ?>
+<h2>
+    <img src="view/book.jpg" alt="icon" class=icon />
+	Liked books
+</h2>
 <table>
 	<tr>
 		<th>Title</th>
@@ -21,8 +25,19 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
+<?php }
+else { ?>
+   <h2>
+		<img src="view/book.jpg" alt="icon" class=icon />
+		<?php echo $currentUser; ?> has no liked book
+	</h2>
+<?php 
+} ?>
 
-<h2>All books:</h2>
+<h2>
+    <img src="view/book.jpg" alt="icon" class=icon />
+	All books
+</h2>
 <table>
 <tr>
 		<th>Title</th>
@@ -67,7 +82,10 @@ for( $i = 0; $i < count($all_books); ++$i ){ ?>
 <div>
 
    <form action="index.php?rt=book/insert" method="post">
-      <h3>Add new book</h3>
+    <h2>
+    <img src="view/book.jpg" alt="icon" class=icon />
+	Add new book
+	</h2>
 
       <input type="text" name="title" required placeholder="enter book title">
       <input type="text" name="author" required placeholder="enter author">

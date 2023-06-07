@@ -40,6 +40,11 @@ img.gender {
     padding: 5px;
 }
 
+img.icon {
+    width: 40px;
+    height: 40px;
+}
+
 /* stil za navigaciju */
 
 
@@ -150,6 +155,16 @@ table {
         color: white;
     }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
 /* stil liste */
 ul {
     list-style: circle inside;

@@ -1,7 +1,10 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 
-
-    <h2>Liked sports of <?php echo $currentUser; ?>:</h2>
+<?php if (!empty($liked_sports)) { ?>
+    <h2>
+		<img src="view/sport.png" alt="icon" class=icon />
+		Liked sports of <?php echo $currentUser; ?>
+	</h2>
     <table>
     <tr>
         <th>Type</th>
@@ -18,8 +21,19 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<?php }
+else { ?>
+    <h2>
+		<img src="view/sport.png" alt="icon" class=icon />
+		<?php echo $currentUser; ?> has no liked sport
+	</h2>
+<?php 
+} ?>
 
-<h2>All sports:</h2>
+    <h2>
+		<img src="view/sport.png" alt="icon" class=icon />
+		All sports
+	</h2>
 <table>
     <tr>
         <th>Type</th>
@@ -45,7 +59,10 @@
 
 <div class="form-container">
    <form action="index.php?rt=sport/insert" method="post">
-      <h3>Add new sport</h3>
+      <h2>
+		<img src="view/sport.png" alt="icon" class=icon />
+		Add new sport
+	</h2>
       <?php
       if(isset($error)){
          foreach($error as $error){

@@ -1,7 +1,11 @@
 <?php require_once __DIR__ . '/_header.php'; ?>
 <?php require_once __DIR__ . '/../model/service.class.php';?>
 
-    <h2>Liked clubs of <?php echo $currentUser; ?>:</h2>
+<?php if (!empty($liked_clubs)) { ?>
+     <h2>
+		<img src="view/club2.png" alt="icon" class=icon />
+		Liked clubs
+	</h2>
     <table>
         <tr>
             <th>Name</th>
@@ -34,8 +38,19 @@
         }
         ?>
     </table>
+<?php }
+else { ?>
+     <h2>
+		<img src="view/club2.png" alt="icon" class=icon />
+		<?php echo $currentUser; ?> has no liked club
+	</h2>
+<?php 
+} ?>
 
-    <h2>All clubs:</h2>
+    <h2>
+		<img src="view/club2.png" alt="icon" class=icon />
+		All clubs
+	</h2>
     <table>
         <tr>
             <th>Name</th>
@@ -79,7 +94,10 @@
 
 <div class="form-container">
    <form action="index.php?rt=club/insert" method="post">
-      <h3>Add new club</h3>
+      <h2>
+		<img src="view/club2.png" alt="icon" class=icon />
+		Add new club
+	   </h2>
       <?php
       if(isset($error)){
          foreach($error as $error){
