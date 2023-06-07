@@ -2,6 +2,7 @@
 
 <?php
 foreach( $bands as $b ){
+    echo '<br>';
    echo $b->name . '<br>';
    echo $b->country . '<br>';
    echo $b->genre . '<br>';

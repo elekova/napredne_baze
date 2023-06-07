@@ -41,6 +41,9 @@
      };
       ?>
       <input type="text" name="title" required placeholder="enter title">
+      <input type="text" name="director" required placeholder="enter director">
+      <input type="text" name="genre" required placeholder="enter genre">
+      <input type="text" name="year" required placeholder="enter year">
       <br></br>
       <button type="submit" name="search_movie" value="search_movie">Search movie!</button>
       <br></br>

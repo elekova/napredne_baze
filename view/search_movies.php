@@ -2,6 +2,7 @@
 
 <?php
 foreach( $movies as $m ){
+    echo '<br>';
    echo $m->title . '<br>';
    echo $m->director . '<br>';
    echo $m->genre . '<br>';

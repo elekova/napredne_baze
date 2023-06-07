@@ -2,6 +2,7 @@
 
 <?php
 foreach( $books as $b ){
+   echo '<br>';
    echo $b->title . '<br>';
    echo $b->author . '<br>';
    echo $b->year . '<br>';

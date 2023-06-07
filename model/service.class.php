@@ -887,7 +887,25 @@ class Service
 			$arr[] = $this->getMovieByName($row['title']);
 		}
 		return $arr;
+	}
 
+	function getSearchedMovies( $title, $director, $year, $genre)
+	{
+		try
+		{
+			$db = DB::getConnection();
+			$st = $db->prepare( 'SELECT * FROM movie WHERE title LIKE :title OR director LIKE :director OR year LIKE :year OR genre LIKE :genre' );
+            $st->execute(array( 'title' => '%' . $title . '%', 'director' => '%' . $director . '%','year' => '%' . $year . '%', 'genre' => '%' . $genre . '%' ));
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+
+		$arr = array();
+		
+		while( $row = $st->fetch() )
+		{
+			$arr[] = $this->getMovieByName($row['title']);
+		}
+		return $arr;
 	}
 
 	//USER----------------------------------------------------------------------------------------------------------------
